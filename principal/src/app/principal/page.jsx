@@ -62,13 +62,13 @@ export default function Home() {
                                 md:top-[23%] md:left-[8%] sm:left-[8%] z-10 text-center text-white text-base sm:text-2xl md:text-3xl lg:text-2xl leading-tight">
                     <h1 className="flex flex-col justify-center items-center gap-2">
                         <span className="text-[#00f3ff] font-semibold">
-                            Renueva tu solución Enpoint por 12 meses y recibe
+                            Renueva tu solución Endpoint por 12 meses y recibe
                         </span>
                         <span className="text-white text-xl md:text-4xl lg:text-3xl font-bold bg-black/30 px-2 py-1 rounded-lg">
                             6 meses sin costo extra
                         </span>
-                        <span className="text-[#00f3ff] font-semibold">
-                            totalmente gratis
+                        <span className="text-[#ff8000] xl:text-8x1 font-bold">
+                            Totalmente Gratis
                         </span>
                     </h1>
                 </div>

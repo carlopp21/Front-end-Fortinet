@@ -1,18 +1,20 @@
-import useRegister from "../../lib/useRegister";
-import { useState } from 'react';
-import { useEffect } from "react";
+'use client'
+import useRegister from "../../hook/useRegister";
 
 export default function RegisterForm() {
     const {
+        nombreEmpresa, setNombreEmpresa,
+        nitEmpresa, setNitEmpresa,
+        tipoLicencia, setTipoLicencia,
         nombreUsuario, setNombreUsuario,
         numeroTelefono, setNumeroTelefono,
         cargoUsuario, setCargoUsuario,
         correoUsuario, setCorreoUsuario,
-        nombreEmpresa, setNombreEmpresa,
+        loading,
         mensaje,
         handleSubmit,
         mostrarCard,
-        setMostrarCard,
+        setMostrarCard
     } = useRegister();
 
 
@@ -28,7 +30,9 @@ export default function RegisterForm() {
         boxShadow: 'none',             // evita ese inset blanco fuerte',
         boxShadow: 'inset 0 1px 3px rgba(255, 255, 255, 1)',
         transition: 'all 0.3s ease',
-        outline: 'none'
+        outline: 'none',
+        appearance: 'none'
+
     };
 
     return (
@@ -69,7 +73,7 @@ export default function RegisterForm() {
                         ¿Quieres renovar tus licencias con nosotros?
                     </h1>
                     <h2 className="text-2xl font-century font-semibold mb-6 text-center text-white">
-                        Dejanos tus datos
+                        ¡Regístrate!
                     </h2>
                     <div style={{
                         marginBottom: '25px'
@@ -82,7 +86,7 @@ export default function RegisterForm() {
                                     Nombre de la empresa
                                 </label>
                                 <input
-                                    className="w-full p-2 rounded-md border border-gray-300 bg-white text-black"
+                                    className="w-full p-2 rounded-md border border-gray-300 bg-transparent text-black"
                                     type="text"
                                     value={nombreEmpresa}
                                     onChange={e => setNombreEmpresa(e.target.value)}
@@ -91,7 +95,38 @@ export default function RegisterForm() {
 
                                 />
                             </div>
+                            <div style={{ marginBottom: '25px' }}>
+                                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', color: 'white' }}>
+                                    NIT
+                                </label>
+                                <input
+                                    type="text"
+                                    className="w-full p-2 rounded-md border border-gray-300 bg-transparent text-black"
+                                    value={nitEmpresa}
+                                    onChange={e => setNitEmpresa(e.target.value)}
+                                    style={inputStyle}
 
+                                />
+                            </div>
+                            {/* Menú desplegable bonito */}
+                            <div style={{ marginBottom: '25px' }}>
+                                <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', color: 'white' }}>
+                                    Tipo de licencia
+                                </label>
+                                <select
+                                    value={tipoLicencia}
+                                    onChange={e => setTipoLicencia(e.target.value)}
+                                    style={inputStyle}
+                                >
+                                    <option value="" style={{ background: '#0d3458' }}>
+                                        Selecciona una opción
+                                    </option>
+                                    <option value="Bitdefender" style={{ background: '#0d3458' }}>Bitdefender</option>
+                                    <option value="eset" style={{ background: '#0d3458' }}>eset</option>
+                                    <option value="Kaspersky" style={{ background: '#0d3458' }}>Kaspersky</option>
+                                    <option value="SOPHOS" style={{ background: '#0d3458' }}>SOPHOS</option>
+                                </select>
+                            </div>
                             <div style={{ marginBottom: '25px' }}>
                                 <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', color: 'white' }}>
                                     Nombres y apellidos
@@ -116,7 +151,7 @@ export default function RegisterForm() {
                                 </label>
                                 <input
                                     type="text"
-                                    className="w-full p-2 rounded-md border border-gray-300 bg-white text-black"
+                                    className="w-full p-2 rounded-md border border-gray-300 bg-transparen text-black"
                                     value={cargoUsuario}
                                     onChange={e => setCargoUsuario(e.target.value)}
                                     required
@@ -131,7 +166,7 @@ export default function RegisterForm() {
                                 </label>
                                 <input
                                     type="text"
-                                    className="w-full p-2 rounded-md border border-gray-300 bg-white text-black"
+                                    className="w-full p-2 rounded-md border border-gray-300 bg-transparen text-black"
                                     value={numeroTelefono}
                                     onChange={e => setNumeroTelefono(e.target.value)}
                                     required
@@ -140,12 +175,13 @@ export default function RegisterForm() {
                                 />
                             </div>
 
+
                             <div style={{ marginBottom: '25px' }}>
                                 <label style={{ display: 'block', marginBottom: '8px', fontWeight: '500', color: 'white' }}>
                                     Correo
                                 </label>
                                 <input
-                                    className="w-full p-2 rounded-md border border-gray-300 bg-white text-black"
+                                    className="w-full p-2 rounded-md border border-gray-300 bg-transparent text-black"
                                     type="email"
                                     value={correoUsuario}
                                     onChange={e => setCorreoUsuario(e.target.value)}
@@ -164,7 +200,7 @@ export default function RegisterForm() {
                                     max-w-md
                                     py-4
                                     px-6
-                                    bg-[#00f3ff]
+                                    bg-[#ff8000]
                                     text-white
                                     font-bold
                                     text-xl
@@ -173,7 +209,7 @@ export default function RegisterForm() {
                                     shadow-lg
                                     transition-all
                                     duration-300
-                                    hover:bg-[#008b94]
+                                    hover:bg-[#00ffff]
                                     hover:shadow-xl
                                     focus:outline-none
                                     focus:ring-2
