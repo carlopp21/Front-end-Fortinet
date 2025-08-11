@@ -1,0 +1,50 @@
+/* globals.css (o tu archivo de estilos global) */
+@import "tailwindcss";
+
+/* Define las font-face */
+@font-face {
+  font-family: "CenturyGothicLocal";
+  src: url("/fonts/CenturyGothic-Regular.woff2") format("woff2"),
+       url("/fonts/CenturyGothic-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CenturyGothicLocal";
+  src: url("/fonts/CenturyGothic-Bold.woff2") format("woff2"),
+       url("/fonts/CenturyGothic-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Variable CSS para usarla en tu proyecto */
+:root{
+  --font-century: "CenturyGothicLocal", "Century Gothic", Arial, sans-serif;
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+/* Tus reglas previas */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* Aplica la fuente por defecto al body */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-century);
+}
