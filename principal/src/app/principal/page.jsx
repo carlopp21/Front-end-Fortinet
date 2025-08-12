@@ -3,11 +3,9 @@ import Head from "next/head";
 import RegisterForm from "../components/registro/registro";
 import Image from "next/image";
 import React, { useState } from "react";
-import { useRouter } from "next/navigation"; // Si usas App Router
 
 
 export default function Home() {
-    const router = useRouter();
     const [showForm, setShowForm] = useState(false);
 
     return (
