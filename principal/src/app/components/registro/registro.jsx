@@ -18,19 +18,20 @@ export default function RegisterForm() {
     } = useRegister();
 
     // Estilo inline reutilizable (colores coherentes con fondo oscuro)
-    const inputStyle = {
-        width: '100%',
-        padding: '10px 12px',
-        fontSize: '16px',
-        border: '1px solid rgba(255,255,255,0.15)',
-        borderRadius: '8px',
-        background: 'transparent',
-        color: '#FFFFFF',
-        boxShadow: 'none',
-        transition: 'all 0.2s ease',
-        outline: 'none',
-        appearance: 'none'
-    };
+const inputStyle = {
+    width: '100%',
+    padding: '10px 12px',
+    fontSize: '16px',
+    border: '1px solid rgba(255,255,255,0.15)',
+    borderRadius: '8px',
+    backgroundColor: '#0d3458', // o el color base de tu página
+    color: '#FFFFFF',
+    boxShadow: 'none',
+    transition: 'all 0.2s ease',
+    outline: 'none',
+    appearance: 'none'
+};
+
 
     // Wrapper del submit: evita reload y controla mostrarCard
     const handleFormSubmit = async (e) => {
@@ -61,13 +62,16 @@ export default function RegisterForm() {
                         w-full p-8 border border-[#00f3ff]
                         bg-gradient-to-br from-[#0d3458] to-[#00051a]
                         rounded-xl shadow-xl font-sans text-white
-                        max-h-[90vh] overflow-y-auto md:p-10 lg:p-12
+                        max-h-[90vh] overflow-y-auto md:p-10 lg:p-12 relative
                     "
                 >
-                    <h1 className="text-3xl font-bold mb-6 text-center text-[#00f3ff]">
+                    <h1 className="text-sm w-[300px] font-bold mb-6 text-center text-[#00f3ff]
+                     relative top-8 mx-auto         
+                    /* BASE (xs): relativo, baja 2rem (ajusta top-8 a lo que quieras) */
+                    md:absolute md:top-[14%] md:left-1/2 md:-translate-x-1/2 md:mx-0 /* MD+: absolute y centrado */">
                         ¿Quieres renovar tus licencias con nosotros?
                     </h1>
-                    <h2 className="text-2xl font-semibold mb-6 text-center text-white">
+                    <h2 className="text-1xl font-semibold mb-6 text-center text-white mt-[50px] left-[15%] md:mt-[90px]">
                         ¡Regístrate!
                     </h2>
 

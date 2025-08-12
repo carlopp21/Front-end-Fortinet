@@ -36,7 +36,7 @@ export default function useRegister() {
             numeroTelefono: numeroTelefono.trim(),
             correoUsuario: correoUsuario.trim(),
             nitEmpresa: nitEmpresa.trim(),
-            tipoLicencia: tipoLicencia.toUpperCase()
+            tipoLicencia: tipoLicencia
         }
         try {
             const baseUrl = process.env.NEXT_PUBLIC_API_URL;
