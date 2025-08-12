@@ -19,7 +19,11 @@ export default function Home() {
             ">
                 {/* Fondo */}
                 <Image
+<<<<<<< HEAD
                     src="/FOndo-izq.png"
+=======
+                    src="/FOndo-Izq.png"
+>>>>>>> 21452894f34e37e202dd19a7c2b96bfec923ee30
                     alt="Fondo"
                     fill
                     className="object-cover"
