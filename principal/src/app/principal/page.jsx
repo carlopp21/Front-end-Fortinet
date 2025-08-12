@@ -3,8 +3,11 @@ import Head from "next/head";
 import RegisterForm from "../components/registro/registro";
 import Image from "next/image";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation"; // Si usas App Router
+
 
 export default function Home() {
+    const router = useRouter();
     const [showForm, setShowForm] = useState(false);
 
     return (
@@ -149,7 +152,10 @@ export default function Home() {
                 <div className="lg:hidden fixed inset-0 z-50 bg-gradient-to-br from-[#0d3458] to-[#00051a] p-4 overflow-y-auto">
                     <button
                         className="fixed z-[100] top-6 right-6 bg-[#ff8000] hover:bg-[#e67300] rounded-full w-12 h-12 flex items-center justify-center text-white text-2xl transition-all duration-300 shadow-lg"
-                        onClick={() => setShowForm(false)}
+                        onClick={() => {
+                            setShowForm(false);
+                            router.push("/principal"); 
+                        }}
                     >
                         ✕
                     </button>
