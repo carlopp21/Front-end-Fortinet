@@ -1,5 +1,7 @@
 'use client'
+import { useState } from "react";
 import useRegister from "../../hook/useRegister";
+import { useRouter } from "next/router";
 
 export default function RegisterForm() {
     const {
@@ -18,20 +20,28 @@ export default function RegisterForm() {
     } = useRegister();
 
     // Estilo inline reutilizable (colores coherentes con fondo oscuro)
-const inputStyle = {
-    width: '100%',
-    padding: '10px 12px',
-    fontSize: '16px',
-    border: '1px solid rgba(255,255,255,0.15)',
-    borderRadius: '8px',
-    backgroundColor: '#0d3458', // o el color base de tu página
-    color: '#FFFFFF',
-    boxShadow: 'none',
-    transition: 'all 0.2s ease',
-    outline: 'none',
-    appearance: 'none'
-};
-
+    const inputStyle = {
+        width: '100%',
+        padding: '10px 12px',
+        fontSize: '16px',
+        border: '1px solid rgba(255,255,255,0.15)',
+        borderRadius: '8px',
+        backgroundColor: '#0d3458', // o el color base de tu página
+        color: '#FFFFFF',
+        boxShadow: 'none',
+        transition: 'all 0.2s ease',
+        outline: 'none',
+        appearance: 'none'
+    };
+    const resetForm = () => {
+        setNombreEmpresa("");
+        setNitEmpresa("");
+        setTipoLicencia("");
+        setNombreUsuario("");
+        setNumeroTelefono("");
+        setCargoUsuario("");
+        setCorreoUsuario("");
+    };
 
     // Wrapper del submit: evita reload y controla mostrarCard
     const handleFormSubmit = async (e) => {
@@ -65,13 +75,13 @@ const inputStyle = {
                         max-h-[90vh] overflow-y-auto md:p-10 lg:p-12 relative
                     "
                 >
-                    <h1 className="text-sm w-[300px] font-bold mb-6 text-center text-[#00f3ff]
+                    <h1 className="text-sm w-[200px] font-bold mb-6 items-center text-center text-[#00f3ff]
                      relative top-8 mx-auto         
                     /* BASE (xs): relativo, baja 2rem (ajusta top-8 a lo que quieras) */
-                    md:absolute md:top-[14%] md:left-1/2 md:-translate-x-1/2 md:mx-0 /* MD+: absolute y centrado */">
+                    md:absolute md:top-[14%] md:left-1/2 md:-translate-x-1/2 md:mx-0  xl:text-xl xl:w-[300px] lg:text-xl  /* MD+: absolute y centrado */">
                         ¿Quieres renovar tus licencias con nosotros?
                     </h1>
-                    <h2 className="text-1xl font-semibold mb-6 text-center text-white mt-[50px] left-[15%] md:mt-[90px]">
+                    <h2 className="text-1xl font-semibold mb-6 text-center text-white mt-[50px] left-[15%] md:mt-[140px] lg:mt-[160px] xl:mt-[160px]">
                         ¡Regístrate!
                     </h2>
 
@@ -215,7 +225,10 @@ const inputStyle = {
                         aria-label="Modal de confirmación"
                     >
                         <button
-                            onClick={() => setMostrarCard(false)}
+                            onClick={() => {
+                                resetForm();
+                                setMostrarCard(false);
+                            }}
                             className="absolute top-4 right-4 text-gray-300 hover:text-white transition duration-200"
                             aria-label="Cerrar"
                         >
@@ -232,8 +245,9 @@ const inputStyle = {
                             </p>
                         </div>
                     </div>
-                </div>
-            )}
+                </div >
+            )
+            }
         </>
     );
 }
