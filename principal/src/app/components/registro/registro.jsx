@@ -111,10 +111,10 @@ export default function RegisterForm() {
                                 style={inputStyle}
                                 aria-label="Tipo de licencia"
                             >
-                                <option value="">Selecciona una opción</option>
-                                <option value="Bitdefender">Bitdefender</option>
-                                <option value="eset">eset</option>
-                                <option value="Kaspersky">Kaspersky</option>
+                                <option value="" disabled>Selecciona una opción</option>
+                                <option value="BITDEFENDER">Bitdefender</option>
+                                <option value="ESET">ESET</option>
+                                <option value="KASPERSKY">Kaspersky</option>
                                 <option value="SOPHOS">SOPHOS</option>
                             </select>
                         </div>
