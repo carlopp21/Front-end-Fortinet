@@ -44,8 +44,15 @@ export default function useRegister() {
 
             const res = await fetch(`${baseUrl}/api/usuario/public/registro`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Origin": "https://fortinet-5ifb.vercel.app",
+                    "Access-Control-Request-Method": "POST",
+                    "Access-Control-Request-Headers": "Content-Type"
+                },
                 body: JSON.stringify(payload),
+                credentials: 'include',
+                mode: 'cors' // Fuerza modo CORS
             });
 
             if (!res.ok) {
