@@ -154,7 +154,7 @@ export default function Home() {
                         className="fixed z-[100] top-6 right-6 bg-[#ff8000] hover:bg-[#e67300] rounded-full w-12 h-12 flex items-center justify-center text-white text-2xl transition-all duration-300 shadow-lg"
                         onClick={() => {
                             setShowForm(false);
-                            router.push("/principal"); 
+                            window.close();
                         }}
                     >
                         ✕
