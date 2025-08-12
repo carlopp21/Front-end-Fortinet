@@ -222,11 +222,6 @@ export default function RegisterForm() {
 
                         <h2 className="text-3xl font-extrabold text-center tracking-wide mb-1">¡Gracias!</h2>
 
-                        <div className="my-2 text-center">
-                            <span className="text-6xl font-extrabold tracking-tight text-white drop-shadow-lg">100%</span>
-                            <p className="text-xl font-semibold mt-1 text-gray-200">Descuento aplicado</p>
-                        </div>
-
                         <div className="w-full mt-6 mb-4">
                             <p className="text-center mb-2 text-5xl text-gray-100">
                                 Uno de nuestros asesores se pondrá en contacto contigo pronto
