@@ -49,7 +49,7 @@ export default function Home() {
                 </div>
 
                 {/* Capa 3: Oferta Destacada */}
-                <div className="absolute border border-[#00f3ff] rounded-2xl p-4 bg-black/30 z-20 w-[90%] max-w-[500px] top-[20%] left-1/2 transform -translate-x-1/2 md:top-[35%] lg:w-[40%] lg:left-[75%] lg:top-[25%] xl:top-[30%] xl:left-[75%]">
+                <div className="absolute border border-[#00f3ff] rounded-2xl p-4 bg-black/30 z-20 w-[90%] max-w-[500px] top-[20%] left-1/2 transform -translate-x-1/2 md:top-[25%] lg:w-[50%] lg:left-[75%] lg:top-[25%] xl:top-[30%] xl:left-[75%]">
                     <div className="flex flex-col justify-center items-center gap-2">
                         <span className="text-[#00f3ff] font-semibold text-center text-lg md:text-xl">
                             Renueva tu solución Endpoint por 12 meses y recibe
@@ -121,7 +121,7 @@ export default function Home() {
                 </div>
 
                 {/* Capa 7: Llamado a la Acción */}
-                <div className="absolute w-[90%] max-w-[500px] z-20 text-center text-white font-bold text-sm top-[60%] left-1/2 transform -translate-x-1/2 sm:top-[60%] md:top-[60%] md:text-base lg:text-lg lg:top-[55%] lg:left-[75%] lg:w-[40%] xl:top-[65%] xl:left-[75%]">
+                <div className="absolute w-[90%] max-w-[500px] z-20 text-center text-white font-bold text-sm top-[60%] left-1/2 transform -translate-x-1/2 sm:top-[60%] md:top-[60%] md:text-base lg:text-lg lg:top-[57%] lg:left-[75%] lg:w-[40%] xl:top-[60%] xl:left-[75%]">
                     <p>
                         Aprovecha ahora y renueva tu protección extendida con Dataservicios y Comunicaciones S.A.S
                     </p>
