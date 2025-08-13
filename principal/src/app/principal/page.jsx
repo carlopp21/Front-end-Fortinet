@@ -1,14 +1,10 @@
 'use client'
-import RegisterForm from "../components/registro/registro";
 import Image from "next/image";
 import React, { useState, useEffect, useRef } from "react";
-import dynamic from 'next/dynamic';
 
 // Carga diferida del formulario
-const RegisterForm = dynamic(
-    () => import('../components/registro/registro'),
-    { ssr: false }
-);
+const RegisterForm = React.lazy(() => import('../components/registro/registro'));
+
 
 export default function Home() {
     const [showForm, setShowForm] = useState(false);
@@ -186,7 +182,9 @@ export default function Home() {
                 PANEL DERECHO (FORMULARIO)
                ======================= */}
             <div className="hidden lg:block lg:w-[45%] h-screen bg-gradient-to-br from-[#0d3458] to-[#00051a] p-8 overflow-y-auto">
-                <RegisterForm />
+                <React.Suspense fallback={<div className="text-center py-10">Cargando formulario...</div>}>
+                    <RegisterForm />
+                </React.Suspense>
             </div>
 
             {/* =======================
@@ -197,7 +195,9 @@ export default function Home() {
                     ref={formRef}
                     className="lg:hidden fixed inset-0 z-50 bg-gradient-to-br from-[#0d3458] to-[#00051a] p-4 overflow-y-auto"
                 >
-                    <RegisterForm />
+                    <React.Suspense fallback={<div className="text-center py-10">Cargando formulario...</div>}>
+                        <RegisterForm />
+                    </React.Suspense>
                 </div>
             )
             }
