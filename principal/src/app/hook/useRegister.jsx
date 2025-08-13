@@ -46,7 +46,7 @@ export default function useRegister() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
-                    "Origin": "https://fortinet-5ifb.vercel.app",
+                    "Origin": "https://ciberseguridad-three.vercel.app",
                     "Access-Control-Request-Method": "POST",
                     "Access-Control-Request-Headers": "Content-Type"
                 },

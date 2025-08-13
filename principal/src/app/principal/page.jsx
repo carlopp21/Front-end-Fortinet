@@ -49,7 +49,7 @@ export default function Home() {
                 </div>
 
                 {/* Capa 3: Oferta Destacada */}
-                <div className="absolute border border-[#00f3ff] rounded-2xl p-4 bg-black/30 z-20 w-[90%] max-w-[500px] top-[20%] left-1/2 transform -translate-x-1/2 md:top-[25%] lg:w-[50%] lg:left-[75%] lg:top-[25%] xl:top-[30%] xl:left-[75%]">
+                <div className="absolute border border-[#00f3ff] rounded-2xl p-4 bg-black/30 z-20 w-[90%] max-w-[500px] top-[20%] left-1/2 transform -translate-x-1/2 md:top-[25%] lg:w-[50%] lg:left-[75%] lg:top-[25%] xl:top-[25%] xl:left-[75%]">
                     <div className="flex flex-col justify-center items-center gap-2">
                         <span className="text-[#00f3ff] font-semibold text-center text-lg md:text-xl">
                             Renueva tu solución Endpoint por 12 meses y recibe
@@ -78,7 +78,7 @@ export default function Home() {
                 {/* Personaje - visible solo en lg+ */}
                 <div className="hidden lg:block absolute z-20"
                     style={{
-                        top: '25%',
+                        top: '11%',
                         left: '5%',
                         width: 'clamp(350px, 40vw, 450px)'
                     }}>
@@ -93,31 +93,28 @@ export default function Home() {
                 </div>
 
                 {/* Banner - visible solo en lg+ */}
-                <div className="hidden lg:block absolute z-20"
-                    style={{
-                        top: '65%',
-                        left: '5%',
-                        width: 'clamp(300px, 42vw, 800px)'
-                    }}>
-                    <div className="relative w-full aspect-[3/1]">
+                <div className="hidden lg:flex lg:flex-row lg:items-center lg:justify-start lg:gap-0">
+                    {/* Contenedor 1: 50% del ancho del contenedor padre */}
+                    <div className="w-1/2 min-w-0">
                         <Image
                             src="/Banner-Frase.png"
                             alt="Banner con frase"
-                            fill
-                            className="object-contain"
+                            width={1200}   // valores grandes para optimización; tailwind controla el tamaño visual
+                            height={300}
+                            className="w-full h-auto block object-contain"
                         />
                     </div>
-                </div>
 
-                {/* Capa 6: Banner Logos */}
-                <div className="absolute bottom-[5%] left-1/2 transform -translate-x-1/2 w-[80%] max-w-[400px] z-20 bottom-[20%] sm:bottom-[15%] md:bottom-[15%] lg:bottom-[5%] lg:left-[75%] xl:left-[40%] xl:top-[90%]">
-                    <Image
-                        src="/Banner-Logos.png"
-                        alt="Banner con logos"
-                        width={800}
-                        height={200}
-                        className="object-contain"
-                    />
+                    {/* Contenedor 2: 50% del ancho del contenedor padre */}
+                    <div className="w-1/2 min-w-0">
+                        <Image
+                            src="/Banner-Logos.png"
+                            alt="Banner con logos"
+                            width={1200}
+                            height={300}
+                            className="w-full h-auto block object-contain"
+                        />
+                    </div>
                 </div>
 
                 {/* Capa 7: Llamado a la Acción */}
