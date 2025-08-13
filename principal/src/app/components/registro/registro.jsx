@@ -1,99 +1,82 @@
 'use client'
-import { useState } from "react";
+import React, { useMemo } from "react";
 import useRegister from "../../hook/useRegister";
-import { useRouter } from "next/router";
 
 export default function RegisterForm() {
     const {
-        nombreEmpresa, setNombreEmpresa,
-        nitEmpresa, setNitEmpresa,
-        tipoLicencia, setTipoLicencia,
-        nombreUsuario, setNombreUsuario,
-        numeroTelefono, setNumeroTelefono,
-        cargoUsuario, setCargoUsuario,
-        correoUsuario, setCorreoUsuario,
+        formData,
+        handleChange,
         loading,
         mensaje,
         handleSubmit,
         mostrarCard,
-        setMostrarCard
+        setMostrarCard,
+        resetForm
     } = useRegister();
 
-    // Estilo inline reutilizable (colores coherentes con fondo oscuro)
-    const inputStyle = {
+    //
+
+    // Memoizar estilos para evitar recreación en cada render
+    const inputStyle = useMemo(() => ({
         width: '100%',
         padding: '10px 12px',
         fontSize: '16px',
         border: '1px solid rgba(255,255,255,0.15)',
         borderRadius: '8px',
-        backgroundColor: '#0d3458', // o el color base de tu página
+        backgroundColor: '#0d3458',
         color: '#FFFFFF',
+        outline: 'none',
         boxShadow: 'none',
         transition: 'all 0.2s ease',
-        outline: 'none',
         appearance: 'none'
-    };
-    const resetForm = () => {
-        setNombreEmpresa("");
-        setNitEmpresa("");
-        setTipoLicencia("");
-        setNombreUsuario("");
-        setNumeroTelefono("");
-        setCargoUsuario("");
-        setCorreoUsuario("");
-    };
-
-    // Wrapper del submit: evita reload y controla mostrarCard
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            // Si tu handleSubmit devuelve true/false según éxito:
-            // const success = await handleSubmit(e);
-            // if (success) setMostrarCard(true);
-
-            // Si handleSubmit no devuelve nada o maneja errores por sí mismo:
-            await handleSubmit(e);
-            setMostrarCard(true);
-        } catch (err) {
-            console.error('Error en submit:', err);
-            // aquí podrías mostrar un mensaje de error
-        }
-    };
+    }), []);
 
     return (
         <>
-            <div
-                onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-5px)'}
-                onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-            >
+            <div className="transform transition-transform duration-300 ">
                 <form
-                    onSubmit={handleFormSubmit}
-                    className="
-                        w-full p-8 border border-[#00f3ff]
-                        bg-gradient-to-br from-[#0d3458] to-[#00051a]
-                        rounded-xl shadow-xl font-sans text-white
-                        max-h-[90vh] overflow-y-auto md:p-10 lg:p-12 relative
-                    "
+                    onSubmit={handleSubmit}
+                    className="w-full p-8 border border-[#00f3ff] bg-gradient-to-br from-[#0d3458] to-[#00051a] rounded-xl shadow-xl"
                 >
-                    <h1 className="text-sm w-[200px] font-bold mb-6 items-center text-center text-[#00f3ff]
-                     relative top-8 mx-auto         
-                    /* BASE (xs): relativo, baja 2rem (ajusta top-8 a lo que quieras) */
-                    md:absolute md:top-[14%] md:left-1/2 md:-translate-x-1/2 md:mx-0  xl:text-xl xl:w-[300px] lg:text-xl  /* MD+: absolute y centrado */">
+                    <h1 className="
+                            text-sm 
+                            w-[200px] 
+                            font-bold 
+                            mb-6 
+                            items-center 
+                            text-center 
+                            text-[#00f3ff] 
+                            relative 
+                            top-8 
+                            mx-auto 
+                            md:absolute 
+                            md:top-[14%] 
+                            md:left-1/2 
+                            md:-translate-x-1/2 
+                            md:mx-0 
+                            xl:text-xl 
+                            xl:w-[300px] 
+                            lg:text-xl
+                            lg:left-[77%]
+                            md:transform         
+                            xl:left-[77%]  
+                            ">
                         ¿Quieres renovar tus licencias con nosotros?
                     </h1>
-                    <h2 className="text-1xl font-semibold mb-6 text-center text-white mt-[50px] left-[15%] md:mt-[140px] lg:mt-[160px] xl:mt-[160px]">
+                    <h2 className="text-1xl font-semibold mb-6 text-center text-white mt-[50px] left-[15%] md:mt-[140px] lg:mt-[180px] xl:mt-[150px]">
                         ¡Regístrate!
                     </h2>
 
                     <div style={{ marginBottom: '25px' }}>
+                        {/* Todos los inputs corregidos */}
                         <div style={{ marginBottom: '25px' }}>
                             <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, color: 'white' }}>
                                 Nombre de la empresa
                             </label>
                             <input
                                 type="text"
-                                value={nombreEmpresa}
-                                onChange={e => setNombreEmpresa(e.target.value)}
+                                value={formData.nombreEmpresa}
+                                onChange={e => handleChange('nombreEmpresa', e.target.value)}
                                 required
                                 style={inputStyle}
                                 placeholder="Ej. Empresa S.A."
@@ -107,8 +90,8 @@ export default function RegisterForm() {
                             </label>
                             <input
                                 type="text"
-                                value={nitEmpresa}
-                                onChange={e => setNitEmpresa(e.target.value)}
+                                value={formData.nitEmpresa}
+                                onChange={e => handleChange('nitEmpresa', e.target.value)}
                                 style={inputStyle}
                                 placeholder="NIT"
                                 aria-label="NIT"
@@ -120,12 +103,17 @@ export default function RegisterForm() {
                                 Tipo de licencia
                             </label>
                             <select
-                                value={tipoLicencia}
-                                onChange={e => setTipoLicencia(e.target.value)}
+                            
+                                value={formData.tipoLicencia}
+                                onChange={e => handleChange('tipoLicencia', e.target.value)}
                                 style={inputStyle}
                                 aria-label="Tipo de licencia"
                             >
-                                
+
+                                <svg xmlns="http://www.w3.org/2000/svg"  width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M12 5v14M19 12l-7 7-7-7" />
+                                </svg>                                
+
                                 <option value="" disabled>Selecciona una opción</option>
                                 <option value="BITDEFENDER">Bitdefender</option>
                                 <option value="ESET">ESET</option>
@@ -140,8 +128,8 @@ export default function RegisterForm() {
                             </label>
                             <input
                                 type="text"
-                                value={nombreUsuario}
-                                onChange={e => setNombreUsuario(e.target.value)}
+                                value={formData.nombreUsuario}
+                                onChange={e => handleChange('nombreUsuario', e.target.value)}
                                 required
                                 style={inputStyle}
                                 placeholder="Tu nombre completo"
@@ -155,8 +143,8 @@ export default function RegisterForm() {
                             </label>
                             <input
                                 type="text"
-                                value={cargoUsuario}
-                                onChange={e => setCargoUsuario(e.target.value)}
+                                value={formData.cargoUsuario}
+                                onChange={e => handleChange('cargoUsuario', e.target.value)}
                                 required
                                 style={inputStyle}
                                 placeholder="Cargo"
@@ -170,8 +158,8 @@ export default function RegisterForm() {
                             </label>
                             <input
                                 type="text"
-                                value={numeroTelefono}
-                                onChange={e => setNumeroTelefono(e.target.value)}
+                                value={formData.numeroTelefono}
+                                onChange={e => handleChange('numeroTelefono', e.target.value)}
                                 required
                                 style={inputStyle}
                                 placeholder="Teléfono"
@@ -185,8 +173,8 @@ export default function RegisterForm() {
                             </label>
                             <input
                                 type="email"
-                                value={correoUsuario}
-                                onChange={e => setCorreoUsuario(e.target.value)}
+                                value={formData.correoUsuario}
+                                onChange={e => handleChange('correoUsuario', e.target.value)}
                                 required
                                 style={inputStyle}
                                 placeholder="correo@ejemplo.com"
@@ -194,19 +182,25 @@ export default function RegisterForm() {
                             />
                         </div>
                     </div>
-
                     <div className="flex justify-center mt-8">
                         <button
-                            className="
-                                w-full max-w-md py-4 px-6 bg-[#ff8000] text-white font-bold text-xl
-                                rounded-xl cursor-pointer shadow-lg transition-all duration-300
-                                hover:bg-[#00ffff] hover:shadow-xl focus:outline-none focus:ring-2
-                                focus:ring-[#00f3ff] focus:ring-opacity-50 transform hover:-translate-y-1
-                            "
+                            className={`w-full max-w-md py-4 px-6 text-white font-bold text-xl rounded-xl shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#00f3ff] focus:ring-opacity-50 ${loading
+                                ? 'bg-gray-500 cursor-not-allowed'
+                                : 'bg-[#ff8000] hover:bg-[#00ffff] hover:shadow-xl transform hover:-translate-y-1'
+                                }`}
                             type="submit"
-                            aria-label="Enviar formulario y obtener beneficio"
+                            disabled={loading}
+                            aria-label="Enviar formulario"
                         >
-                            {loading ? 'Enviando...' : 'Disfruta aquí tu beneficio'}
+                            {loading ? (
+                                <div className="flex items-center justify-center">
+                                    <svg className="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                    Enviando...
+                                </div>
+                            ) : 'Disfruta aquí tu beneficio'}
                         </button>
                     </div>
                 </form>
@@ -246,9 +240,8 @@ export default function RegisterForm() {
                             </p>
                         </div>
                     </div>
-                </div >
-            )
-            }
+                </div>
+            )}
         </>
     );
 }
