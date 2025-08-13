@@ -9,7 +9,7 @@ export default function Home() {
     const [showForm, setShowForm] = useState(false);
 
     return (
-        <main className="min-h-screen bg-gray-100 flex flex-col md:flex-row">
+        <main className="relative min-h-screen bg-gray-100 flex flex-col md:flex-row">
             {/* =======================
                 PANEL IZQUIERDO (FONDO + CONTENIDO PRINCIPAL)
                ======================= */}
@@ -49,7 +49,7 @@ export default function Home() {
                 </div>
 
                 {/* Capa 3: Oferta Destacada */}
-                <div className="absolute border border-[#00f3ff] rounded-2xl p-4 bg-black/30 z-20 w-[90%] max-w-[500px] top-[20%] left-1/2 transform -translate-x-1/2 md:top-[25%] lg:w-[50%] lg:left-[75%] lg:top-[25%] xl:top-[25%] xl:left-[75%]">
+                <div className="absolute border border-[#00f3ff] rounded-2xl p-4 bg-black/30 z-20 w-[90%] max-w-[500px] top-[20%] left-1/2 transform -translate-x-1/2 md:top-[25%] lg:w-[50%] lg:left-[75%] lg:top-[25%] xl:top-[25%] xl:left-[74%]">
                     <div className="flex flex-col justify-center items-center gap-2">
                         <span className="text-[#00f3ff] font-semibold text-center text-lg md:text-xl">
                             Renueva tu solución Endpoint por 12 meses y recibe
@@ -64,8 +64,8 @@ export default function Home() {
                 </div>
 
                 {/* Banner Frase para móviles y tablets */}
-                <div className="block lg:hidden absolute top-[45%] left-1/2 transform -translate-x-1/2 w-[80%] max-w-[400px] z-20">
-                    <div className="relative w-full aspect-[3/1]">
+                <div className="block lg:hidden absolute left-1/2 transform -translate-x-1/2 w-[80%] max-w-[400px] z-20 top-[60%] sm:top-[60%] md:top-[65%]">
+                    <div className="relative w-full aspect-[3/1] md:top-[55%] ">
                         <Image
                             src="/Banner-Frase.png"
                             alt="Banner con frase"
@@ -75,14 +75,15 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* Personaje - visible solo en lg+ */}
-                <div className="hidden lg:block absolute z-20"
-                    style={{
-                        top: '11%',
-                        left: '5%',
-                        width: 'clamp(350px, 40vw, 450px)'
-                    }}>
-                    <div className="relative w-full aspect-[3/4]">
+                <div
+                    className="
+                            hidden lg:flex lg:flex-row lg:items-start lg:gap-0    /* solo en lg+ muestra el bloque y lo pone en fila */
+                            absolute top-[11%] left-[5%] z-20                    /* posicionamiento del grupo (usa clases, no inline) */
+                            pointer-events-auto
+                        "
+                >
+                    {/* Personaje: ancho responsive (clamp), no se encoje */}
+                    <div className="relative flex-shrink-0 w-[clamp(350px,40vw,450px)] aspect-[3/4] lg:left-[-70px] lg:top-[100px] xl:left-[2%] xl:top-[60px]">
                         <Image
                             src="/Personaje.png"
                             alt="Personaje"
@@ -90,26 +91,20 @@ export default function Home() {
                             className="object-contain"
                         />
                     </div>
-                </div>
 
-                {/* Banner - visible solo en lg+ */}
-                <div className="hidden lg:flex lg:flex-row lg:items-center lg:justify-start lg:gap-0">
-                    {/* Contenedor 1: 50% del ancho del contenedor padre */}
-                    <div className="w-1/2 min-w-0">
+                    {/* Banner: se ajusta a la derecha del personaje y se mantiene pegado */}
+                    <div
+                        className="
+                            relative
+                            min-w-0
+                            w-[clamp(250px,30vw,800px)]    /* escala automático entre min y max */
+                            lg:top-[640px] lg:left-[-430px]
+                            xl:top-[605px] xl:left-[-420px]
+  "
+                    >
                         <Image
                             src="/Banner-Frase.png"
                             alt="Banner con frase"
-                            width={1200}   // valores grandes para optimización; tailwind controla el tamaño visual
-                            height={300}
-                            className="w-full h-auto block object-contain"
-                        />
-                    </div>
-
-                    {/* Contenedor 2: 50% del ancho del contenedor padre */}
-                    <div className="w-1/2 min-w-0">
-                        <Image
-                            src="/Banner-Logos.png"
-                            alt="Banner con logos"
                             width={1200}
                             height={300}
                             className="w-full h-auto block object-contain"
@@ -117,21 +112,39 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* Capa 7: Llamado a la Acción */}
-                <div className="absolute w-[90%] max-w-[500px] z-20 text-center text-white font-bold text-sm top-[60%] left-1/2 transform -translate-x-1/2 sm:top-[60%] md:top-[60%] md:text-base lg:text-lg lg:top-[57%] lg:left-[75%] lg:w-[40%] xl:top-[60%] xl:left-[75%]">
-                    <p>
-                        Aprovecha ahora y renueva tu protección extendida con Dataservicios y Comunicaciones S.A.S
-                    </p>
+                {/* Contenedor 2: 50% del ancho del contenedor padre */}
+                <div className="
+                            absolute 
+                            left-1/2 -translate-x-1/2 top-4        /* default: centrado arriba */
+                            lg:left-4 lg:top-8                    /* en lg lo mueves a la izquierda un poco */
+                            xl:left-[35%] xl:top-[92%]            /* en xl lo mueves donde quieras (usa % o px) */
+                            w-[90%] max-w-[600px] lg:max-w-[480px] top-[80%] sm lg:top-[80%] lg:left-[45%] xl:max-w-[560px] 
+                            m">
+                    <Image
+                        src="/Banner-Logos.png"
+                        alt="Banner con logos"
+                        width={1200}
+                        height={300}
+                        className="w-full h-auto block object-contain"
+                    />
                 </div>
-
-                {/* Capa 8: Botón móvil */}
-                <button
-                    className="absolute bottom-[5%] left-1/2 transform -translate-x-1/2 py-3 px-6 bg-[#ff8000] text-white text-lg font-bold rounded-xl shadow-lg z-50 lg:hidden"
-                    onClick={() => setShowForm(!showForm)}
-                >
-                    {showForm ? "Ocultar formulario" : "Disfruta aquí tu beneficio"}
-                </button>
             </div>
+
+            {/* Capa 7: Llamado a la Acción */}
+            <div className="absolute w-[90%] max-w-[500px] z-20 text-center text-white font-bold text-sm top-[50%] left-1/2 transform -translate-x-1/2 sm:top-[50%] md:top-[55%] md:text-base lg:text-lg lg:top-[55%] lg:left-[41%] lg:w-[25%] xl:top-[60%] xl:left-[40%]">
+                <p>
+                    Aprovecha ahora y renueva tu protección extendida con Dataservicios y Comunicaciones S.A.S.
+                </p>
+            </div>
+
+            {/* Capa 8: Botón móvil */}
+            <button
+                className="absolute bottom-[5%] left-1/2 transform -translate-x-1/2 py-3 px-6 bg-[#ff8000] text-white text-lg font-bold rounded-xl shadow-lg z-50 lg:hidden"
+                onClick={() => setShowForm(!showForm)}
+            >
+                {showForm ? "Ocultar formulario" : "Disfruta aquí tu beneficio"}
+            </button>
+
 
             {/* =======================
                 PANEL DERECHO (FORMULARIO)
@@ -143,20 +156,22 @@ export default function Home() {
             {/* =======================
                 FORMULARIO MÓVIL
                ======================= */}
-            {showForm && (
-                <div className="lg:hidden fixed inset-0 z-50 bg-gradient-to-br from-[#0d3458] to-[#00051a] p-4 overflow-y-auto">
-                    <button
-                        className="fixed z-[100] top-6 right-6 bg-[#ff8000] hover:bg-[#e67300] rounded-full w-12 h-12 flex items-center justify-center text-white text-2xl transition-all duration-300 shadow-lg"
-                        onClick={() => {
-                            setShowForm(false);
-                            window.close();
-                        }}
-                    >
-                        ✕
-                    </button>
-                    <RegisterForm />
-                </div>
-            )}
-        </main>
+            {
+                showForm && (
+                    <div className="lg:hidden fixed inset-0 z-50 bg-gradient-to-br from-[#0d3458] to-[#00051a] p-4 overflow-y-auto">
+                        <button
+                            className="fixed z-[100] top-6 right-6 bg-[#ff8000] hover:bg-[#e67300] rounded-full w-12 h-12 flex items-center justify-center text-white text-2xl transition-all duration-300 shadow-lg"
+                            onClick={() => {
+                                setShowForm(false);
+                                window.close();
+                            }}
+                        >
+                            ✕
+                        </button>
+                        <RegisterForm />
+                    </div>
+                )
+            }
+        </main >
     )
 }

@@ -20,6 +20,7 @@ export default function useRegister() {
         setNumeroTelefono("");
         setCargoUsuario("");
         setCorreoUsuario("");
+        
     };
 
     const handleSubmit = async (e) => {
