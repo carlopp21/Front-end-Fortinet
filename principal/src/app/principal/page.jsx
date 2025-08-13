@@ -5,10 +5,10 @@ import React, { useState, useEffect, useRef } from "react";
 import dynamic from 'next/dynamic';
 
 // Carga diferida del formulario
-const LazyRegisterForm = dynamic(() => import('../components/registro/registro'), {
-    loading: () => <div className="text-center py-10">Cargando formulario...</div>,
-    ssr: false
-});
+const RegisterForm = dynamic(
+    () => import('../components/registro/registro'),
+    { ssr: false }
+);
 
 export default function Home() {
     const [showForm, setShowForm] = useState(false);
@@ -17,28 +17,28 @@ export default function Home() {
     // Precarga de imágenes críticas
     // Código utiliza la API de link rel="preload"
     useEffect
-    //Se ejecuta solo una vez cuando el componente se monta en el DOM
-    //El aarray vacio significa "sin dependencias" por lo que no se vulev a ejecutar
-    (() => {
-        const preloadImages = [
-            '/Fondo-Izq.png',
-            '/Logo-Data.png',
-            '/Banner-Frase.png'
-            //Define las rutas de las imágenes que son críticas para la experiencia del usuario
-        ];
+        //Se ejecuta solo una vez cuando el componente se monta en el DOM
+        //El aarray vacio significa "sin dependencias" por lo que no se vulev a ejecutar
+        (() => {
+            const preloadImages = [
+                '/Fondo-Izq.png',
+                '/Logo-Data.png',
+                '/Banner-Frase.png'
+                //Define las rutas de las imágenes que son críticas para la experiencia del usuario
+            ];
 
-        preloadImages.forEach(src => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        //Indica al navegador que debe precargar este recurso con alta prioridad
-        link.as = 'image';
-        //Especifica el tipo de recurso (imagen) para que el navegador
-        link.href = src;
-        //Establece la ruta de la imagen a precargar
-        document.head.appendChild(link);
-        //Añade el elemento <link> al <head> del documento HTML
-        });
-    }, []);
+            preloadImages.forEach(src => {
+                const link = document.createElement('link');
+                link.rel = 'preload';
+                //Indica al navegador que debe precargar este recurso con alta prioridad
+                link.as = 'image';
+                //Especifica el tipo de recurso (imagen) para que el navegador
+                link.href = src;
+                //Establece la ruta de la imagen a precargar
+                document.head.appendChild(link);
+                //Añade el elemento <link> al <head> del documento HTML
+            });
+        }, []);
 
     // Scroll suave al formulario en móviles
     const handleShowForm = () => {
@@ -197,7 +197,7 @@ export default function Home() {
                     ref={formRef}
                     className="lg:hidden fixed inset-0 z-50 bg-gradient-to-br from-[#0d3458] to-[#00051a] p-4 overflow-y-auto"
                 >
-                    <LazyRegisterForm />
+                    <RegisterForm />
                 </div>
             )
             }
