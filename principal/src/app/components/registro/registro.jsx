@@ -1,5 +1,5 @@
 'use client'
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import useRegister from "../../hook/useRegister";
 
 export default function RegisterForm() {
@@ -14,9 +14,89 @@ export default function RegisterForm() {
         resetForm
     } = useRegister();
 
-    //
+    // Estado para errores específicos por campo
+    const [fieldErrors, setFieldErrors] = useState({
+        nombreEmpresa: '',
+        nitEmpresa: '',
+        tipoLicencia: '',
+        nombreUsuario: '',
+        numeroTelefono: '',
+        cargoUsuario: '',
+        correoUsuario: ''
+    });
 
-    // Memoizar estilos para evitar recreación en cada render
+    // Validación en tiempo real
+    const validateField = (field, value) => {
+        let error = '';
+        
+        switch(field) {
+            case 'nombreEmpresa':
+                if (!value.trim()) error = 'Debe ingresar el nombre de la empresa';
+                else if (value.length < 3) error = 'Mínimo 3 caracteres';
+                break;
+            case 'nitEmpresa':
+                if (!value.trim()) error = 'El NIT es obligatorio';
+                else if (!/^\d{9,15}$/.test(value)) error = 'NIT inválido (9-15 dígitos)';
+                break;
+            case 'tipoLicencia':
+                if (!value) error = 'Por favor seleccione un tipo de licencia';
+                break;
+            case 'nombreUsuario':
+                if (!value.trim()) error = 'El nombre completo es obligatorio';
+                else if (value.length < 5) error = 'Mínimo 5 caracteres';
+                break;
+            case 'cargoUsuario':
+                if (!value.trim()) error = 'Debe especificar su cargo';
+                break;
+            case 'numeroTelefono':
+                if (!value.trim()) error = 'El teléfono es obligatorio';
+                else if (!/^\d{7,15}$/.test(value)) error = 'Teléfono inválido (7-15 dígitos)';
+                break;
+            case 'correoUsuario':
+                if (!value.trim()) error = 'El correo electrónico es obligatorio';
+                else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) error = 'Formato de correo inválido';
+                break;
+            default:
+                break;
+        }
+        
+        setFieldErrors(prev => ({ ...prev, [field]: error }));
+        return error === '';
+    };
+
+    // Handler combinado para cambio y validación
+    const handleFieldChange = (field, value) => {
+        handleChange(field, value);
+        validateField(field, value);
+    };
+
+    // Validar todo el formulario antes de enviar
+    const validateForm = () => {
+        let isValid = true;
+        const newErrors = {...fieldErrors};
+        
+        for (const field in formData) {
+            if (!validateField(field, formData[field])) {
+                isValid = false;
+            }
+        }
+        
+        return isValid;
+    };
+
+    // Handler de envío con validación completa
+    const handleSubmitWithValidation = async (e) => {
+        e.preventDefault();
+        
+        if (!validateForm()) {
+            return;
+        }
+        
+        // Si pasa la validación, proceder con el envío
+        await handleSubmit(e);
+    };
+
+    // Estilos
     const inputStyle = useMemo(() => ({
         width: '100%',
         padding: '10px 12px',
@@ -31,11 +111,25 @@ export default function RegisterForm() {
         appearance: 'none'
     }), []);
 
+    const errorStyle = {
+        color: '#ff6b6b',
+        fontSize: '0.85rem',
+        marginTop: '4px'
+    };
+
+    const labelStyle = {
+        display: 'block', 
+        marginBottom: '8px', 
+        fontWeight: 500, 
+        color: 'white',
+        position: 'relative'
+    };
+
     return (
         <>
             <div className="transform transition-transform duration-300 ">
                 <form
-                    onSubmit={handleSubmit}
+                    onSubmit={handleSubmitWithValidation}
                     className="w-full p-8 border border-[#00f3ff] bg-gradient-to-br from-[#0d3458] to-[#00051a] rounded-xl shadow-xl"
                 >
                     <h1 className="
@@ -57,129 +151,184 @@ export default function RegisterForm() {
                             xl:text-xl 
                             xl:w-[300px] 
                             lg:text-xl
-                            lg:left-[77%]
-                            md:transform         
-                            xl:left-[77%]  
+                            lg:left-[78%]
+                            md:transform
+                            xl:left-[77%]
                             ">
                         ¿Quieres renovar tus licencias con nosotros?
                     </h1>
-                    <h2 className="text-1xl font-semibold mb-6 text-center text-white mt-[50px] left-[15%] md:mt-[140px] lg:mt-[180px] xl:mt-[150px]">
+                    <h2 className="text-1xl font-semibold mb-6 text-center text-white mt-[50px] left-[15%] md:mt-[140px] lg:mt-[160px] xl:mt-[200px]">
                         ¡Regístrate!
                     </h2>
 
                     <div style={{ marginBottom: '25px' }}>
-                        {/* Todos los inputs corregidos */}
+                        {/* Campo: Nombre de la empresa */}
                         <div style={{ marginBottom: '25px' }}>
-                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, color: 'white' }}>
+                            <label style={labelStyle}>
                                 Nombre de la empresa
+                                <span className="text-red-500 ml-1">*</span>
+                                <span className="text-xs text-gray-400 block mt-1">Ej: Mi Empresa S.A.S.</span>
                             </label>
                             <input
                                 type="text"
                                 value={formData.nombreEmpresa}
-                                onChange={e => handleChange('nombreEmpresa', e.target.value)}
+                                onChange={e => handleFieldChange('nombreEmpresa', e.target.value)}
                                 required
-                                style={inputStyle}
+                                style={{
+                                    ...inputStyle,
+                                    borderColor: fieldErrors.nombreEmpresa ? '#ff6b6b' : 'rgba(255,255,255,0.15)'
+                                }}
                                 placeholder="Ej. Empresa S.A."
                                 aria-label="Nombre de la empresa"
                             />
+                            {fieldErrors.nombreEmpresa && (
+                                <p style={errorStyle}>{fieldErrors.nombreEmpresa}</p>
+                            )}
                         </div>
 
+                        {/* Campo: NIT */}
                         <div style={{ marginBottom: '25px' }}>
-                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, color: 'white' }}>
+                            <label style={labelStyle}>
                                 NIT
+                                <span className="text-red-500 ml-1">*</span>
+                                <span className="text-xs text-gray-400 block mt-1">Solo números, sin guiones (9-15 dígitos)</span>
                             </label>
                             <input
                                 type="text"
                                 value={formData.nitEmpresa}
-                                onChange={e => handleChange('nitEmpresa', e.target.value)}
-                                style={inputStyle}
+                                onChange={e => handleFieldChange('nitEmpresa', e.target.value)}
+                                style={{
+                                    ...inputStyle,
+                                    borderColor: fieldErrors.nitEmpresa ? '#ff6b6b' : 'rgba(255,255,255,0.15)'
+                                }}
                                 placeholder="NIT"
                                 aria-label="NIT"
                             />
+                            {fieldErrors.nitEmpresa && (
+                                <p style={errorStyle}>{fieldErrors.nitEmpresa}</p>
+                            )}
                         </div>
 
+                        {/* Campo: Tipo de licencia */}
                         <div style={{ marginBottom: '25px' }}>
-                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, color: 'white' }}>
+                            <label style={labelStyle}>
                                 Tipo de licencia
+                                <span className="text-red-500 ml-1">*</span>
                             </label>
                             <select
-                            
                                 value={formData.tipoLicencia}
-                                onChange={e => handleChange('tipoLicencia', e.target.value)}
-                                style={inputStyle}
+                                onChange={e => handleFieldChange('tipoLicencia', e.target.value)}
+                                style={{
+                                    ...inputStyle,
+                                    borderColor: fieldErrors.tipoLicencia ? '#ff6b6b' : 'rgba(255,255,255,0.15)'
+                                }}
                                 aria-label="Tipo de licencia"
                             >
-
-                                <svg xmlns="http://www.w3.org/2000/svg"  width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M12 5v14M19 12l-7 7-7-7" />
-                                </svg>                                
-
                                 <option value="" disabled>Selecciona una opción</option>
                                 <option value="BITDEFENDER">Bitdefender</option>
                                 <option value="ESET">ESET</option>
                                 <option value="KASPERSKY">Kaspersky</option>
                                 <option value="SOPHOS">SOPHOS</option>
                             </select>
+                            {fieldErrors.tipoLicencia && (
+                                <p style={errorStyle}>{fieldErrors.tipoLicencia}</p>
+                            )}
                         </div>
 
+                        {/* Campo: Nombres y apellidos */}
                         <div style={{ marginBottom: '25px' }}>
-                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, color: 'white' }}>
+                            <label style={labelStyle}>
                                 Nombres y apellidos
+                                <span className="text-red-500 ml-1">*</span>
+                                <span className="text-xs text-gray-400 block mt-1">Mínimo 5 caracteres</span>
                             </label>
                             <input
                                 type="text"
                                 value={formData.nombreUsuario}
-                                onChange={e => handleChange('nombreUsuario', e.target.value)}
+                                onChange={e => handleFieldChange('nombreUsuario', e.target.value)}
                                 required
-                                style={inputStyle}
+                                style={{
+                                    ...inputStyle,
+                                    borderColor: fieldErrors.nombreUsuario ? '#ff6b6b' : 'rgba(255,255,255,0.15)'
+                                }}
                                 placeholder="Tu nombre completo"
                                 aria-label="Nombres y apellidos"
                             />
+                            {fieldErrors.nombreUsuario && (
+                                <p style={errorStyle}>{fieldErrors.nombreUsuario}</p>
+                            )}
                         </div>
 
+                        {/* Campo: Cargo */}
                         <div style={{ marginBottom: '25px' }}>
-                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, color: 'white' }}>
+                            <label style={labelStyle}>
                                 Cargo
+                                <span className="text-red-500 ml-1">*</span>
+                                <span className="text-xs text-gray-400 block mt-1">Ej: Gerente de TI</span>
                             </label>
                             <input
                                 type="text"
                                 value={formData.cargoUsuario}
-                                onChange={e => handleChange('cargoUsuario', e.target.value)}
+                                onChange={e => handleFieldChange('cargoUsuario', e.target.value)}
                                 required
-                                style={inputStyle}
+                                style={{
+                                    ...inputStyle,
+                                    borderColor: fieldErrors.cargoUsuario ? '#ff6b6b' : 'rgba(255,255,255,0.15)'
+                                }}
                                 placeholder="Cargo"
                                 aria-label="Cargo"
                             />
+                            {fieldErrors.cargoUsuario && (
+                                <p style={errorStyle}>{fieldErrors.cargoUsuario}</p>
+                            )}
                         </div>
 
+                        {/* Campo: Teléfono */}
                         <div style={{ marginBottom: '25px' }}>
-                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, color: 'white' }}>
+                            <label style={labelStyle}>
                                 Teléfono
+                                <span className="text-red-500 ml-1">*</span>
+                                <span className="text-xs text-gray-400 block mt-1">Solo números (7-15 dígitos)</span>
                             </label>
                             <input
                                 type="text"
                                 value={formData.numeroTelefono}
-                                onChange={e => handleChange('numeroTelefono', e.target.value)}
+                                onChange={e => handleFieldChange('numeroTelefono', e.target.value)}
                                 required
-                                style={inputStyle}
+                                style={{
+                                    ...inputStyle,
+                                    borderColor: fieldErrors.numeroTelefono ? '#ff6b6b' : 'rgba(255,255,255,0.15)'
+                                }}
                                 placeholder="Teléfono"
                                 aria-label="Teléfono"
                             />
+                            {fieldErrors.numeroTelefono && (
+                                <p style={errorStyle}>{fieldErrors.numeroTelefono}</p>
+                            )}
                         </div>
 
+                        {/* Campo: Correo */}
                         <div style={{ marginBottom: '25px' }}>
-                            <label style={{ display: 'block', marginBottom: '8px', fontWeight: 500, color: 'white' }}>
+                            <label style={labelStyle}>
                                 Correo
+                                <span className="text-red-500 ml-1">*</span>
+                                <span className="text-xs text-gray-400 block mt-1">Formato: usuario@dominio.com</span>
                             </label>
                             <input
                                 type="email"
                                 value={formData.correoUsuario}
-                                onChange={e => handleChange('correoUsuario', e.target.value)}
+                                onChange={e => handleFieldChange('correoUsuario', e.target.value)}
                                 required
-                                style={inputStyle}
+                                style={{
+                                    ...inputStyle,
+                                    borderColor: fieldErrors.correoUsuario ? '#ff6b6b' : 'rgba(255,255,255,0.15)'
+                                }}
                                 placeholder="correo@ejemplo.com"
                                 aria-label="Correo"
                             />
+                            {fieldErrors.correoUsuario && (
+                                <p style={errorStyle}>{fieldErrors.correoUsuario}</p>
+                            )}
                         </div>
                     </div>
                     <div className="flex justify-center mt-8">

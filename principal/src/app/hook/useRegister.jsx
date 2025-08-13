@@ -1,112 +1,115 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 export default function useRegister() {
-    const [nombreEmpresa, setNombreEmpresa] = useState("");
-    const [nombreUsuario, setNombreUsuario] = useState("");
-    const [nitEmpresa, setNitEmpresa] = useState("");
-    const [tipoLicencia, setTipoLicencia] = useState("");
-    const [numeroTelefono, setNumeroTelefono] = useState("");
-    const [cargoUsuario, setCargoUsuario] = useState("");
-    const [correoUsuario, setCorreoUsuario] = useState("");
+    // Estado unificado para mejorar rendimiento
+    //Reemplaza múltiples useState individuales por un único objeto que contiene todos los campos del formulario.
+    //Siempre que tengas formularios con múltiples campos relacionados.
+    const [formData, setFormData] = useState({
+        nombreEmpresa: "",
+        nombreUsuario: "",
+        nitEmpresa: "",
+        tipoLicencia: "",
+        numeroTelefono: "",
+        cargoUsuario: "",
+        correoUsuario: ""
+    });
+
     const [mensaje, setMensaje] = useState("");
     const [mostrarCard, setMostrarCard] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const resetForm = () => {
-        setNombreEmpresa("");
-        setNitEmpresa("");
-        setTipoLicencia("");
-        setNombreUsuario("");
-        setNumeroTelefono("");
-        setCargoUsuario("");
-        setCorreoUsuario("");
-        
-    };
+    // Handler optimizado con useCallback
+    //Memoiza funciones para evitar recrearlas en cada render.
+    const handleChange = useCallback((field, value) => {
+        setFormData(prev => ({
+            ...prev, // Crea una copia superficial del objeto actual
+            [field]: value //Actualiza SOLO la propiedad especificada, Recibe el nombre del campo y su nuevo valor  
+        }));
+    }, []);
+    //Si field = "nombreEmpresa", equivale a nombreEmpresa: value
 
-    const handleSubmit = async (e) => {
+    const resetForm = useCallback(() => {
+        setFormData({
+            nombreEmpresa: "",
+            nombreUsuario: "",
+            nitEmpresa: "",
+            tipoLicencia: "",
+            numeroTelefono: "",
+            cargoUsuario: "",
+            correoUsuario: ""
+        });
+    }, []);
+
+    const handleSubmit = useCallback(async (e) => {
         e.preventDefault();
         if (loading) return;
+
         setLoading(true);
         setMensaje("");
 
+        // Validación básica frontend antes de enviar
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.correoUsuario)) {
+            setMensaje("Por favor ingrese un email válido");
+            setLoading(false);
+            return;
+        }
 
         const payload = {
-            nombreEmpresa: nombreEmpresa.trim(),
-            nombreUsuario: nombreUsuario.trim(),
-            cargoUsuario: cargoUsuario.trim(),
-            numeroTelefono: numeroTelefono.trim(),
-            correoUsuario: correoUsuario.trim(),
-            nitEmpresa: nitEmpresa.trim(),
-            tipoLicencia: tipoLicencia
-        }
+            ...formData,
+            nombreEmpresa: formData.nombreEmpresa.trim(),
+            nombreUsuario: formData.nombreUsuario.trim(),
+            cargoUsuario: formData.cargoUsuario.trim(),
+            numeroTelefono: formData.numeroTelefono.trim(),
+            correoUsuario: formData.correoUsuario.trim(),
+            nitEmpresa: formData.nitEmpresa.trim(),
+            tipoLicencia: formData.tipoLicencia
+        };
+
         try {
             const baseUrl = process.env.NEXT_PUBLIC_API_URL;
             if (!baseUrl) throw new Error("NEXT_PUBLIC_API_URL no está configurada");
 
+            // AbortController para manejar timeout
+            //Qué hace: Cancela la petición si demora más de 10 segundos.
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 10000); // Timeout de 10 segundos
+
             const res = await fetch(`${baseUrl}/api/usuario/public/registro`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Origin": "https://ciberseguridad-three.vercel.app",
-                    "Access-Control-Request-Method": "POST",
-                    "Access-Control-Request-Headers": "Content-Type"
-                },
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(payload),
                 credentials: 'include',
-                mode: 'cors' // Fuerza modo CORS
+                signal: controller.signal
             });
 
+            clearTimeout(timeoutId);
+
             if (!res.ok) {
-                const errorText = await res.text();
-                setMensaje(`Error en el servidor: ${errorText}`);
-                setLoading(false);
-                return;
+                const errorData = await res.json();
+                throw new Error(errorData.message || `Error ${res.status}`);
             }
 
             const data = await res.json();
-
-            // Actualiza estado con lo que venga del backend (si aplica)
-            setNombreEmpresa(data.nombreEmpresa ?? nombreEmpresa);
-            setNitEmpresa(data.nitEmpresa ?? nitEmpresa);
-            setNombreUsuario(data.nombreUsuario ?? nombreUsuario);
-            setNumeroTelefono(data.numeroTelefono ?? numeroTelefono);
-            setCargoUsuario(data.cargoUsuario ?? cargoUsuario);
-            setCorreoUsuario(data.correoUsuario ?? correoUsuario);
-
             setMensaje("Registro exitoso");
             setMostrarCard(true);
-            // resetForm();
         } catch (error) {
             console.error("Error registrando usuario:", error);
-            if (error.name === "TypeError") {
-                setMensaje("Error de conexión con el servidor");
-            } else {
-                setMensaje(error.message || "Error inesperado en el registro");
-            }
+            setMensaje(error.name === "AbortError"
+                ? "Tiempo de espera agotado. Intente nuevamente."
+                : error.message || "Error inesperado en el registro");
         } finally {
             setLoading(false);
         }
-    };
+    }, [formData, loading]);
 
     return {
-        nombreEmpresa,
-        setNombreEmpresa,
-        nitEmpresa,
-        setNitEmpresa,
-        tipoLicencia,
-        setTipoLicencia,
-        nombreUsuario,
-        setNombreUsuario,
-        numeroTelefono,
-        setNumeroTelefono,
-        cargoUsuario,
-        setCargoUsuario,
-        correoUsuario,
-        setCorreoUsuario,
+        formData,
+        handleChange,
         mensaje,
         mostrarCard,
         setMostrarCard,
         loading,
         handleSubmit,
-    }
+        resetForm
+    };
 }

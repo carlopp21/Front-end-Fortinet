@@ -1,18 +1,55 @@
 'use client'
-import Head from "next/head";
 import RegisterForm from "../components/registro/registro";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import dynamic from 'next/dynamic';
 
+// Carga diferida del formulario
+const LazyRegisterForm = dynamic(() => import('../components/registro/registro'), {
+    loading: () => <div className="text-center py-10">Cargando formulario...</div>,
+    ssr: false
+});
 
 export default function Home() {
     const [showForm, setShowForm] = useState(false);
+    const formRef = useRef(null);
 
+    // Precarga de imágenes críticas
+    // Código utiliza la API de link rel="preload"
+    useEffect
+    //Se ejecuta solo una vez cuando el componente se monta en el DOM
+    //El aarray vacio significa "sin dependencias" por lo que no se vulev a ejecutar
+    (() => {
+        const preloadImages = [
+            '/Fondo-Izq.png',
+            '/Logo-Data.png',
+            '/Banner-Frase.png'
+            //Define las rutas de las imágenes que son críticas para la experiencia del usuario
+        ];
+
+        preloadImages.forEach(src => {
+        const link = document.createElement('link');
+        link.rel = 'preload';
+        //Indica al navegador que debe precargar este recurso con alta prioridad
+        link.as = 'image';
+        //Especifica el tipo de recurso (imagen) para que el navegador
+        link.href = src;
+        //Establece la ruta de la imagen a precargar
+        document.head.appendChild(link);
+        //Añade el elemento <link> al <head> del documento HTML
+        });
+    }, []);
+
+    // Scroll suave al formulario en móviles
+    const handleShowForm = () => {
+        setShowForm(true);
+        setTimeout(() => {
+            formRef.current?.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+    };
     return (
         <main className="relative min-h-screen bg-gray-100 flex flex-col md:flex-row">
-            {/* =======================
-                PANEL IZQUIERDO (FONDO + CONTENIDO PRINCIPAL)
-               ======================= */}
+            {/* PANEL IZQUIERDO (FONDO + CONTENIDO PRINCIPAL)*/}
             <div className="relative w-full lg:w-[55%] h-screen overflow-hidden">
                 {/* Fondo de pantalla */}
                 <Image
@@ -26,9 +63,7 @@ export default function Home() {
                 {/* Capa de superposición para mejorar contraste de texto */}
                 <div className="absolute inset-0 bg-black/20 z-10"></div>
 
-                {/* =======================
-                    CONTENIDO ORGANIZADO EN CAPAS
-                   ======================= */}
+                {/* CONTENIDO ORGANIZADO EN CAPAS */}
 
                 {/* Capa 1: Logo */}
                 <div className="absolute top-5 left-1/2 transform -translate-x-1/2 w-70 h-auto z-20 sm:top-8 sm:w-[300px] md:top-10 lg:top-5 lg:left-[50%] lg:transform-none xl:left-[50%]">
@@ -139,11 +174,12 @@ export default function Home() {
 
             {/* Capa 8: Botón móvil */}
             <button
-                className="absolute bottom-[5%] left-1/2 transform -translate-x-1/2 py-3 px-6 bg-[#ff8000] text-white text-lg font-bold rounded-xl shadow-lg z-50 lg:hidden"
-                onClick={() => setShowForm(!showForm)}
+                className="fixed bottom-4 left-1/2 transform -translate-x-1/2 py-3 px-6 bg-[#ff8000] text-white text-lg font-bold rounded-xl shadow-lg z-50 lg:hidden transition-all duration-300 hover:scale-105"
+                onClick={handleShowForm}
             >
-                {showForm ? "Ocultar formulario" : "Disfruta aquí tu beneficio"}
+                Disfruta aquí tu beneficio
             </button>
+
 
 
             {/* =======================
@@ -156,21 +192,14 @@ export default function Home() {
             {/* =======================
                 FORMULARIO MÓVIL
                ======================= */}
-            {
-                showForm && (
-                    <div className="lg:hidden fixed inset-0 z-50 bg-gradient-to-br from-[#0d3458] to-[#00051a] p-4 overflow-y-auto">
-                        <button
-                            className="fixed z-[100] top-6 right-6 bg-[#ff8000] hover:bg-[#e67300] rounded-full w-12 h-12 flex items-center justify-center text-white text-2xl transition-all duration-300 shadow-lg"
-                            onClick={() => {
-                                setShowForm(false);
-                                window.close();
-                            }}
-                        >
-                            ✕
-                        </button>
-                        <RegisterForm />
-                    </div>
-                )
+            {showForm && (
+                <div
+                    ref={formRef}
+                    className="lg:hidden fixed inset-0 z-50 bg-gradient-to-br from-[#0d3458] to-[#00051a] p-4 overflow-y-auto"
+                >
+                    <LazyRegisterForm />
+                </div>
+            )
             }
         </main >
     )
