@@ -62,7 +62,7 @@ export default function Home() {
                 {/* CONTENIDO ORGANIZADO EN CAPAS */}
 
                 {/* Capa 1: Logo */}
-                <div className="absolute top-5 left-1/2 transform -translate-x-1/2 w-70 h-auto z-20 sm:top-8 sm:w-[300px] md:top-10 lg:top-5 lg:left-[50%] lg:transform-none xl:left-[50%]">
+                <div className="absolute top-5 left-1/2 transform -translate-x-1/2 w-70 h-auto z-20 sm:top-8 sm:w-[300px] md:top-5 lg:top-5 lg:left-[20%] lg:transform-none xl:left-[50%]">
                     <Image
                         src="/Logo-Data.png"
                         alt="Logo"
@@ -73,14 +73,14 @@ export default function Home() {
                 </div>
 
                 {/* Capa 2: Título Principal - FIXED */}
-                <div className="absolute top-[10%] left-1/2 transform -translate-x-1/2 w-[90%] max-w-[600px] z-30 text-center md:top-[15%] lg:top-[15%] lg:left-[50%]">
-                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-white tracking-tighter drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
+                <div className="absolute top-[10%] left-1/2 transform -translate-x-1/2 w-[90%] max-w-[600px] z-30 text-center sm:top-[19%] md:top-[17%] lg:top-[17%] lg:left-[25%]">
+                    <h1 className="text-2xl md:text-2xl lg:text-2xl font-extrabold text-white tracking-tighter drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
                         ¡Extiende tu seguridad!
                     </h1>
                 </div>
 
                 {/* Capa 3: Oferta Destacada */}
-                <div className="absolute border border-[#00f3ff] rounded-2xl p-4 bg-black/30 z-20 w-[90%] max-w-[500px] top-[20%] left-1/2 transform -translate-x-1/2 md:top-[25%] lg:w-[50%] lg:left-[75%] lg:top-[25%] xl:w-[340px] xl:top-[25%] xl:left-[72%]">
+                <div className="absolute border border-[#00f3ff] rounded-2xl p-4 bg-black/30 z-20 w-[90%] max-w-[500px] top-[20%] left-1/2 transform -translate-x-1/2 sm:top-[27%] md:top-[25%] md:w-[65%] lg:w-[40%] lg:left-[78%] lg:top-[10%] xl:w-[340px] xl:top-[25%] xl:left-[72%]">
                     <div className="flex flex-col justify-center items-center gap-2">
                         <span className="text-[#00f3ff] font-semibold text-center text-lg md:text-xl">
                             Renueva tu solución Endpoint por 12 meses y recibe
@@ -114,7 +114,7 @@ export default function Home() {
                         "
                 >
                     {/* Personaje: ancho responsive (clamp), no se encoje */}
-                    <div className="relative flex-shrink-0 w-[clamp(350px,40vw,350px)] aspect-[3/4] lg:left-[-70px] lg:top-[100px] xl:left-[2%] xl:top-[0px]">
+                    <div className="relative flex-shrink-0 w-[clamp(350px,40vw,350px)] aspect-[3/4] lg:top-[40px] lg:left-[-10px] lg:w-[300px] xl:left-[2%] xl:top-[0px]">
                         <Image
                             src="/Personaje.png"
                             alt="Personaje"
@@ -129,7 +129,7 @@ export default function Home() {
                             relative
                             min-w-0
                             w-[clamp(250px,30vw,800px)]    /* escala automático entre min y max */
-                            lg:top-[640px] lg:left-[-430px]
+                            lg:top-[400px] lg:left-[-250px] lg:w-[400px]
                             xl:top-[420px] xl:left-[-300px]
   "
                     >
@@ -147,9 +147,8 @@ export default function Home() {
                 <div className="
                             absolute 
                             left-1/2 -translate-x-1/2 top-4        /* default: centrado arriba */
-                            lg:left-4 lg:top-8                    /* en lg lo mueves a la izquierda un poco */
                             xl:left-[35%] xl:top-[85%]            /* en xl lo mueves donde quieras (usa % o px) */
-                            w-[90%] max-w-[600px] lg:max-w-[480px] top-[80%] sm lg:top-[80%] lg:left-[45%] xl:max-w-[560px] 
+                            w-[90%] max-w-[600px] lg:max-w-[480px] top-[76%] md:top-[81%] md:w-[450px] lg:top-[90%] lg:left-[45%] xl:max-w-[560px] 
                             m">
                     <Image
                         src="/Banner-Logos.png"
@@ -162,7 +161,7 @@ export default function Home() {
             </div>
 
             {/* Capa 7: Llamado a la Acción */}
-            <div className="absolute w-[90%] max-w-[500px] z-20 text-center text-white font-bold text-sm top-[50%] left-1/2 transform -translate-x-1/2 sm:top-[50%] md:top-[55%] md:text-base lg:text-lg lg:top-[55%] lg:left-[41%] lg:w-[25%] xl:w-[400px] xl:top-[64%] xl:left-[39%]">
+            <div className="absolute w-[90%] max-w-[500px] z-20 text-center text-white font-bold text-sm top-[50%] left-1/2 transform -translate-x-1/2 sm:top-[58%] md:top-[63%] md:text-base lg:text-sm lg:top-[67%] lg:left-[42%] lg:w-[25%] xl:w-[400px] xl:top-[64%] xl:left-[39%]">
                 <p>
                     Aprovecha ahora y renueva tu protección extendida con Dataservicios y Comunicaciones S.A.S.
                 </p>
