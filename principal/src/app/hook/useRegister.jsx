@@ -72,7 +72,7 @@ export default function useRegister() {
             // AbortController para manejar timeout
             //Qué hace: Cancela la petición si demora más de 10 segundos.
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 10000); // Timeout de 10 segundos
+            const timeoutId = setTimeout(() => controller.abort(), 15000); // Timeout de 10 segundos
 
             const res = await fetch(`${baseUrl}/api/usuario/public/registro`, {
                 method: "POST",
