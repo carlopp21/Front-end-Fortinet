@@ -204,8 +204,8 @@ export default function RegisterForm() {
                                     ...inputStyle,
                                     borderColor: fieldErrors.nitEmpresa ? '#ff6b6b' : 'rgba(255,255,255,0.15)'
                                 }}
-                                placeholder="NIT"
-                                aria-label="NIT"
+                                placeholder="NIT o CC"
+                                aria-label="NIT o CC"
                             />
                             {fieldErrors.nitEmpresa && (
                                 <p style={errorStyle}>{fieldErrors.nitEmpresa}</p>
