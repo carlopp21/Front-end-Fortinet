@@ -409,7 +409,7 @@ export default function RegisterForm() {
                                 className="py-3 px-4 rounded-xl border border-transparent bg-gray-700 text-white font-medium hover:bg-gray-600 transition"
                                 aria-label="Cerrar y limpiar formulario"
                             >
-                                Cerrar y limpiar
+                                Limpiar
                             </button>
 
                             {/* Botón enviar */}
