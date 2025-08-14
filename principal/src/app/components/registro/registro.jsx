@@ -75,8 +75,7 @@ export default function RegisterForm() {
     // Validar todo el formulario antes de enviar
     const validateForm = () => {
         let isValid = true;
-        const newErrors = { ...fieldErrors };
-
+        // Nota: aquí valida todos los campos del formData usando la función de validación.
         for (const field in formData) {
             if (!validateField(field, formData[field])) {
                 isValid = false;
@@ -136,8 +135,8 @@ export default function RegisterForm() {
                 >
                     <h1 className="
                         text-sm
-                        w-full        /* ocupa todo el ancho del contenedor */
-                        max-w-[350px] /* limita ancho en pantallas grandes */
+                        w-full
+                        max-w-[350px]
                         font-bold
                         mb-6
                         text-center
@@ -148,7 +147,7 @@ export default function RegisterForm() {
                         ¿Quieres renovar tus licencias con nosotros?
                     </h1>
 
-                    <h2 className="text-1xl font-semibold mb-6 text-center text-white mt-[50px] left-[15%] md:mt-[0px] lg:mt-[00px] xl:mt-[00px]">
+                    <h2 className="text-xl font-semibold mb-6 text-center text-white mt-[50px] left-[15%] md:mt-[0px] lg:mt-[00px] xl:mt-[00px]">
                         ¡Regístrate!
                     </h2>
 
@@ -181,11 +180,13 @@ export default function RegisterForm() {
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
                                 NIT o CC
-                                <span className="text-xs text-gray-400 block mt-1">Solo números, sin guiones </span>
+                                {/* Se eliminó el atributo no válido "optional" ya que React lo muestra como advertencia.
+                                    En su lugar, se añadió un texto visible "Opcional" para que el usuario sepa que no es obligatorio. */}
+                                <span className="text-xs text-gray-400 block mt-1">Solo números, sin guiones — <span className="italic">Opcional</span></span>
                             </label>
                             <input
                                 type="text"
-                                optional
+                                /* Se removió: optional (no es un atributo HTML válido) */
                                 value={formData.nitEmpresa}
                                 onChange={e => handleFieldChange('nitEmpresa', e.target.value)}
                                 style={{
@@ -200,7 +201,7 @@ export default function RegisterForm() {
                             )}
                         </div>
 
-                        {/* Campo: Tipo de licencia */}
+                        {/* Campo: Tipo de licencia (menú desplegable con opciones) */}
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
                                 Tipo de licencia
@@ -211,10 +212,13 @@ export default function RegisterForm() {
                                 onChange={e => handleFieldChange('tipoLicencia', e.target.value)}
                                 style={{
                                     ...inputStyle,
-                                    borderColor: fieldErrors.tipoLicencia ? '#ff6b6b' : 'rgba(255,255,255,0.15)'
+                                    borderColor: fieldErrors.tipoLicencia ? '#ff6b6b' : 'rgba(255,255,255,0.15)',
+                                    // Asegurar que el cursor muestre que es un elemento seleccionable
+                                    cursor: 'pointer'
                                 }}
                                 aria-label="Tipo de licencia"
                             >
+                                {/* Opción placeholder para forzar selección explícita */}
                                 <option value="" disabled>Selecciona una opción</option>
                                 <option value="BITDEFENDER">Bitdefender</option>
                                 <option value="ESET">ESET</option>
@@ -226,7 +230,7 @@ export default function RegisterForm() {
                             )}
                         </div>
 
-                        {/* Campo: Nombres y apellidos */}
+                        {/* Resto de campos... */}
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
                                 Nombres y apellidos
@@ -250,7 +254,6 @@ export default function RegisterForm() {
                             )}
                         </div>
 
-                        {/* Campo: Cargo */}
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
                                 Cargo
@@ -274,7 +277,6 @@ export default function RegisterForm() {
                             )}
                         </div>
 
-                        {/* Campo: Teléfono */}
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
                                 Teléfono
@@ -298,7 +300,6 @@ export default function RegisterForm() {
                             )}
                         </div>
 
-                        {/* Campo: Correo */}
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
                                 Correo
@@ -346,7 +347,7 @@ export default function RegisterForm() {
                 </form>
             </div>
 
-            {/* Renderizamos el form solo si showForm es true */}
+            {/* Renderizamos el form solo si mostrarCard es true */}
             {mostrarCard && (
                 <form
                     onSubmit={handleSubmitWithValidation}
@@ -368,13 +369,12 @@ export default function RegisterForm() {
                         aria-label="Cerrar formulario"
                     >
                         {/* Icono SVG (igual que el que usas en el modal) */}
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                        x
                     </button>
 
                     {/* ---------------- AQUI VA TODO TU CONTENIDO ACTUAL DEL FORM (inputs, h2, botón enviar...) ---------------- */}
-                    ...
+                    {/* Si prefieres, aquí se puede insertar {formContent} si se extrajo previamente */}
+                    {/* Para evitar duplicar el markup, se puede mover la porción superior a una variable y reutilizarla */}
                 </form>
             )}
 
