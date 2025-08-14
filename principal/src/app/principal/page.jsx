@@ -114,7 +114,7 @@ export default function Home() {
                         "
                 >
                     {/* Personaje: ancho responsive (clamp), no se encoje */}
-                    <div className="relative flex-shrink-0 w-[clamp(350px,40vw,350px)] aspect-[3/4] lg:top-[40px] lg:left-[-10px] lg:w-[300px] xl:left-[2%] xl:top-[0px]">
+                    <div className="relative flex-shrink-0 w-[clamp(350px,40vw,350px)] aspect-[3/4] lg:top-[40px] lg:left-[-10px] lg:w-[300px] xl:left-[2%] xl:top-[60px]">
                         <Image
                             src="/Personaje.png"
                             alt="Personaje"
