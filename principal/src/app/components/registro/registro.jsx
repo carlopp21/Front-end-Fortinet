@@ -14,7 +14,6 @@ export default function RegisterForm() {
         resetForm
     } = useRegister();
 
-    // Estado para errores específicos por campo
     const [fieldErrors, setFieldErrors] = useState({
         nombreEmpresa: '',
         nitEmpresa: '',

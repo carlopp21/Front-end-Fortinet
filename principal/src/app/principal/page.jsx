@@ -80,7 +80,7 @@ export default function Home() {
                 </div>
 
                 {/* Capa 3: Oferta Destacada */}
-                <div className="absolute border border-[#00f3ff] rounded-2xl p-4 bg-black/30 z-20 w-[90%] max-w-[500px] top-[20%] left-1/2 transform -translate-x-1/2 md:top-[25%] lg:w-[50%] lg:left-[75%] lg:top-[25%] xl:top-[25%] xl:left-[74%]">
+                <div className="absolute border border-[#00f3ff] rounded-2xl p-4 bg-black/30 z-20 w-[90%] max-w-[500px] top-[20%] left-1/2 transform -translate-x-1/2 md:top-[25%] lg:w-[50%] lg:left-[75%] lg:top-[25%] xl:w-[340px] xl:top-[25%] xl:left-[72%]">
                     <div className="flex flex-col justify-center items-center gap-2">
                         <span className="text-[#00f3ff] font-semibold text-center text-lg md:text-xl">
                             Renueva tu solución Endpoint por 12 meses y recibe
@@ -109,12 +109,12 @@ export default function Home() {
                 <div
                     className="
                             hidden lg:flex lg:flex-row lg:items-start lg:gap-0    /* solo en lg+ muestra el bloque y lo pone en fila */
-                            absolute top-[11%] left-[5%] z-20                    /* posicionamiento del grupo (usa clases, no inline) */
+                            absolute top-[10%] left-[%] z-20                    /* posicionamiento del grupo (usa clases, no inline) */
                             pointer-events-auto
                         "
                 >
                     {/* Personaje: ancho responsive (clamp), no se encoje */}
-                    <div className="relative flex-shrink-0 w-[clamp(350px,40vw,450px)] aspect-[3/4] lg:left-[-70px] lg:top-[100px] xl:left-[2%] xl:top-[60px]">
+                    <div className="relative flex-shrink-0 w-[clamp(350px,40vw,350px)] aspect-[3/4] lg:left-[-70px] lg:top-[100px] xl:left-[2%] xl:top-[0px]">
                         <Image
                             src="/Personaje.png"
                             alt="Personaje"
@@ -130,7 +130,7 @@ export default function Home() {
                             min-w-0
                             w-[clamp(250px,30vw,800px)]    /* escala automático entre min y max */
                             lg:top-[640px] lg:left-[-430px]
-                            xl:top-[605px] xl:left-[-420px]
+                            xl:top-[420px] xl:left-[-300px]
   "
                     >
                         <Image
@@ -148,7 +148,7 @@ export default function Home() {
                             absolute 
                             left-1/2 -translate-x-1/2 top-4        /* default: centrado arriba */
                             lg:left-4 lg:top-8                    /* en lg lo mueves a la izquierda un poco */
-                            xl:left-[35%] xl:top-[92%]            /* en xl lo mueves donde quieras (usa % o px) */
+                            xl:left-[35%] xl:top-[85%]            /* en xl lo mueves donde quieras (usa % o px) */
                             w-[90%] max-w-[600px] lg:max-w-[480px] top-[80%] sm lg:top-[80%] lg:left-[45%] xl:max-w-[560px] 
                             m">
                     <Image
@@ -162,7 +162,7 @@ export default function Home() {
             </div>
 
             {/* Capa 7: Llamado a la Acción */}
-            <div className="absolute w-[90%] max-w-[500px] z-20 text-center text-white font-bold text-sm top-[50%] left-1/2 transform -translate-x-1/2 sm:top-[50%] md:top-[55%] md:text-base lg:text-lg lg:top-[55%] lg:left-[41%] lg:w-[25%] xl:top-[60%] xl:left-[40%]">
+            <div className="absolute w-[90%] max-w-[500px] z-20 text-center text-white font-bold text-sm top-[50%] left-1/2 transform -translate-x-1/2 sm:top-[50%] md:top-[55%] md:text-base lg:text-lg lg:top-[55%] lg:left-[41%] lg:w-[25%] xl:w-[400px] xl:top-[64%] xl:left-[39%]">
                 <p>
                     Aprovecha ahora y renueva tu protección extendida con Dataservicios y Comunicaciones S.A.S.
                 </p>
