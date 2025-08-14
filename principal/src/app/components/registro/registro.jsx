@@ -75,13 +75,11 @@ export default function RegisterForm() {
     // Validar todo el formulario antes de enviar
     const validateForm = () => {
         let isValid = true;
-        // Nota: aquí valida todos los campos del formData usando la función de validación.
         for (const field in formData) {
             if (!validateField(field, formData[field])) {
                 isValid = false;
             }
         }
-
         return isValid;
     };
 
@@ -97,7 +95,7 @@ export default function RegisterForm() {
         await handleSubmit(e);
     };
 
-    // Estilos
+    // Estilos reutilizables
     const inputStyle = useMemo(() => ({
         width: '100%',
         padding: '10px 12px',
@@ -128,6 +126,11 @@ export default function RegisterForm() {
 
     return (
         <>
+            {/* ==========================
+                Formulario principal (siempre visible)
+                - Se añadió botón "Cerrar y limpiar" que resetea campos y cierra la card si está abierta.
+                - El botón es type="button" para evitar envío accidental.
+               ========================== */}
             <div className="transform transition-transform duration-300 ">
                 <form
                     onSubmit={handleSubmitWithValidation}
@@ -152,7 +155,7 @@ export default function RegisterForm() {
                     </h2>
 
                     <div style={{ marginBottom: '25px' }}>
-                        {/* Campo: Nombre de la empresa */}
+                        {/* Nombre de la empresa */}
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
                                 Nombre de la empresa
@@ -176,17 +179,14 @@ export default function RegisterForm() {
                             )}
                         </div>
 
-                        {/* Campo: NIT */}
+                        {/* NIT (opcional) */}
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
                                 NIT o CC
-                                {/* Se eliminó el atributo no válido "optional" ya que React lo muestra como advertencia.
-                                    En su lugar, se añadió un texto visible "Opcional" para que el usuario sepa que no es obligatorio. */}
                                 <span className="text-xs text-gray-400 block mt-1">Solo números, sin guiones — <span className="italic">Opcional</span></span>
                             </label>
                             <input
                                 type="text"
-                                /* Se removió: optional (no es un atributo HTML válido) */
                                 value={formData.nitEmpresa}
                                 onChange={e => handleFieldChange('nitEmpresa', e.target.value)}
                                 style={{
@@ -201,7 +201,7 @@ export default function RegisterForm() {
                             )}
                         </div>
 
-                        {/* Campo: Tipo de licencia (menú desplegable con opciones) */}
+                        {/* Tipo de licencia — menú desplegable con opciones */}
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
                                 Tipo de licencia
@@ -213,12 +213,10 @@ export default function RegisterForm() {
                                 style={{
                                     ...inputStyle,
                                     borderColor: fieldErrors.tipoLicencia ? '#ff6b6b' : 'rgba(255,255,255,0.15)',
-                                    // Asegurar que el cursor muestre que es un elemento seleccionable
                                     cursor: 'pointer'
                                 }}
                                 aria-label="Tipo de licencia"
                             >
-                                {/* Opción placeholder para forzar selección explícita */}
                                 <option value="" disabled>Selecciona una opción</option>
                                 <option value="BITDEFENDER">Bitdefender</option>
                                 <option value="ESET">ESET</option>
@@ -230,7 +228,7 @@ export default function RegisterForm() {
                             )}
                         </div>
 
-                        {/* Resto de campos... */}
+                        {/* Nombres y apellidos */}
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
                                 Nombres y apellidos
@@ -254,6 +252,7 @@ export default function RegisterForm() {
                             )}
                         </div>
 
+                        {/* Cargo */}
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
                                 Cargo
@@ -277,6 +276,7 @@ export default function RegisterForm() {
                             )}
                         </div>
 
+                        {/* Teléfono */}
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
                                 Teléfono
@@ -300,6 +300,7 @@ export default function RegisterForm() {
                             )}
                         </div>
 
+                        {/* Correo */}
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
                                 Correo
@@ -323,9 +324,27 @@ export default function RegisterForm() {
                             )}
                         </div>
                     </div>
-                    <div className="flex justify-center mt-8">
+
+                    {/* Botones: Cerrar y limpiar (left) + Enviar (right) */}
+                    <div className="flex gap-4 justify-between mt-8">
+                        {/* Botón que cierra el formulario y limpia campos sin enviar */}
                         <button
-                            className={`w-full max-w-md py-4 px-6 text-white font-bold text-xl rounded-xl shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#00f3ff] focus:ring-opacity-50 ${loading
+                            type="button"
+                            onClick={() => {
+                                // Acción: resetear campos y ocultar la card si está abierta.
+                                // Comentario en tercera persona: "Se añadió botón 'Cerrar y limpiar' que llama a resetForm() y setMostrarCard(false)."
+                                resetForm();
+                                setMostrarCard(false);
+                            }}
+                            className="py-3 px-4 rounded-xl border border-transparent bg-gray-700 text-white font-medium hover:bg-gray-600 transition"
+                            aria-label="Cerrar y limpiar formulario"
+                        >
+                            Cerrar y limpiar
+                        </button>
+
+                        {/* Botón enviar */}
+                        <button
+                            className={`ml-auto w-full max-w-md py-3 px-6 text-white font-bold text-xl rounded-xl shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#00f3ff] focus:ring-opacity-50 ${loading
                                 ? 'bg-gray-500 cursor-not-allowed'
                                 : 'bg-[#ff8000] hover:bg-[#00ffff] hover:shadow-xl transform hover:-translate-y-1'
                                 }`}
@@ -333,51 +352,43 @@ export default function RegisterForm() {
                             disabled={loading}
                             aria-label="Enviar formulario"
                         >
-                            {loading ? (
-                                <div className="flex items-center justify-center">
-                                    <svg className="animate-spin h-5 w-5 mr-3 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                    </svg>
-                                    Enviando...
-                                </div>
-                            ) : 'Disfruta aquí tu beneficio'}
+                            {loading ? 'Enviando...' : 'Disfruta aquí tu beneficio'}
                         </button>
                     </div>
                 </form>
             </div>
 
-            {/* Renderizamos el form solo si mostrarCard es true */}
+            {/* ==========================
+                Mostrar la CARD de agradecimiento cuando mostrarCard === true
+                - Aquí NO se vuelve a mostrar el formulario; en su lugar se muestra una card simple
+                  con el mensaje de agradecimiento y un botón para cerrar y limpiar.
+                - Comentario en tercera persona: "Se creó una card de agradecimiento que limpia el formulario al cerrarse."
+               ========================== */}
             {mostrarCard && (
-                <form
-                    onSubmit={handleSubmitWithValidation}
-                    // IMPORTANTE: añadimos 'relative' para que el botón absolute
-                    // se posicione respecto al propio formulario.
-                    className="relative w-full p-8 border border-[#00f3ff] bg-gradient-to-br from-[#0d3458] to-[#00051a] rounded-xl shadow-xl"
-                >
-                    {/* ------------- BOTÓN DE CERRAR (solo visible en xs/sm/md) ------------- */}
-                    <button
-                        type="button"
-                        onClick={() => {
-                            // Resetea los campos (usa tu función existente)
-                            resetForm();
-                            // Oculta el formulario localmente (lo cerramos)
-                            setMostrarCard(false);
-                        }}
-                        // lg:hidden -> oculto en pantallas lg y superiores; por tanto se muestra en xs/sm/md
-                        className="absolute top-4 right-4 text-gray-300 hover:text-white transition duration-200 lg:hidden"
-                        aria-label="Cerrar formulario"
-                    >
-                        {/* Icono SVG (igual que el que usas en el modal) */}
-                        x
-                    </button>
+                <div className="mt-6">
+                    <div className="w-full max-w-md mx-auto p-6 rounded-2xl bg-white/5 border border-[#00f3ff] shadow-lg text-center">
+                        <h3 className="text-xl font-bold text-white mb-3">¡Gracias por registrarte!</h3>
+                        <p className="text-sm text-gray-200 mb-6">
+                            Nuestros asesores se comunicarán contigo pronto para ayudarte con la renovación.
+                        </p>
 
-                    {/* ---------------- AQUI VA TODO TU CONTENIDO ACTUAL DEL FORM (inputs, h2, botón enviar...) ---------------- */}
-                    {/* Si prefieres, aquí se puede insertar {formContent} si se extrajo previamente */}
-                    {/* Para evitar duplicar el markup, se puede mover la porción superior a una variable y reutilizarla */}
-                </form>
+                        {/* Botón cerrar que además limpia las celdas */}
+                        <button
+                            type="button"
+                            onClick={() => {
+                                // Comentario en tercera persona: "Al pulsar cerrar, se ejecuta resetForm() para limpiar las celdas
+                                // y setMostrarCard(false) para ocultar la card de agradecimiento."
+                                resetForm();
+                                setMostrarCard(false);
+                            }}
+                            className="py-3 px-6 bg-[#ff8000] text-white rounded-lg font-semibold hover:opacity-90 transition"
+                            aria-label="Cerrar mensaje de agradecimiento"
+                        >
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
             )}
-
         </>
     );
 }
