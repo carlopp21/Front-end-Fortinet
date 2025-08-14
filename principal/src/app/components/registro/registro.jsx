@@ -346,22 +346,22 @@ export default function RegisterForm() {
                 </form>
             </div>
 
-            {/* Modal */}
             {/* Renderizamos el form solo si showForm es true */}
             {mostrarCard && (
                 <form
                     onSubmit={handleSubmitWithValidation}
-                    // Añadimos 'relative' para que el botón absolute se posicione respecto al form
+                    // IMPORTANTE: añadimos 'relative' para que el botón absolute
+                    // se posicione respecto al propio formulario.
                     className="relative w-full p-8 border border-[#00f3ff] bg-gradient-to-br from-[#0d3458] to-[#00051a] rounded-xl shadow-xl"
                 >
-                    {/* BOTÓN CERRAR (visible únicamente en pantallas md, sm y xs) */}
+                    {/* ------------- BOTÓN DE CERRAR (solo visible en xs/sm/md) ------------- */}
                     <button
                         type="button"
                         onClick={() => {
                             // Resetea los campos (usa tu función existente)
                             resetForm();
                             // Oculta el formulario localmente (lo cerramos)
-                            setShowForm(false);
+                            setMostrarCard(false);
                         }}
                         // lg:hidden -> oculto en pantallas lg y superiores; por tanto se muestra en xs/sm/md
                         className="absolute top-4 right-4 text-gray-300 hover:text-white transition duration-200 lg:hidden"
@@ -373,6 +373,8 @@ export default function RegisterForm() {
                         </svg>
                     </button>
 
+                    {/* ---------------- AQUI VA TODO TU CONTENIDO ACTUAL DEL FORM (inputs, h2, botón enviar...) ---------------- */}
+                    ...
                 </form>
             )}
 
