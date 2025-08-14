@@ -35,8 +35,11 @@ export default function RegisterForm() {
                 else if (value.length < 3) error = 'Mínimo 3 caracteres';
                 break;
             case 'nitEmpresa':
-                if (!value.trim()) error = 'El NIT es obligatorio';
-                else if (!/^\d{0,15}$/.test(value)) error = 'NIT inválido (9-15 dígitos)';
+                if (value && value.trim() !== "") {
+                    if (!/^\d+$/.test(value)) {
+                        error = "Solo se permiten numeros"
+                    }
+                }
                 break;
             case 'tipoLicencia':
                 if (!value) error = 'Por favor seleccione un tipo de licencia';
@@ -190,11 +193,11 @@ export default function RegisterForm() {
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
                                 NIT
-                                <span className="text-red-500 ml-1">*</span>
                                 <span className="text-xs text-gray-400 block mt-1">Solo números, sin guiones </span>
                             </label>
                             <input
                                 type="text"
+                                optional
                                 value={formData.nitEmpresa}
                                 onChange={e => handleFieldChange('nitEmpresa', e.target.value)}
                                 style={{
