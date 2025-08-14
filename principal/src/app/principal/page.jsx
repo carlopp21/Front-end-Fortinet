@@ -73,7 +73,7 @@ export default function Home() {
                 </div>
 
                 {/* Capa 2: Título Principal - FIXED */}
-                <div className="absolute top-[10%] left-1/2 transform -translate-x-1/2 w-[90%] max-w-[600px] z-30 text-center sm:top-[19%] md:top-[17%] lg:top-[17%] lg:left-[25%]">
+                <div className="absolute top-[10%] left-1/2 transform -translate-x-1/2 w-[90%] max-w-[600px] z-30 text-center sm:top-[19%] md:top-[17%] lg:top-[17%] lg:left-[25%] xl:left-[49%]">
                     <h1 className="text-2xl md:text-2xl lg:text-2xl font-extrabold text-white tracking-tighter drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
                         ¡Extiende tu seguridad!
                     </h1>
@@ -96,7 +96,7 @@ export default function Home() {
 
                 {/* Banner Frase para móviles y tablets */}
                 <div className="block lg:hidden absolute left-1/2 transform -translate-x-1/2 w-[80%] max-w-[400px] z-20 top-[60%] sm:top-[60%] md:top-[65%]">
-                    <div className="relative w-full aspect-[3/1] md:top-[55%] ">
+                    <div className="relative w-full aspect-[3/1]  md:top-[55%] ">
                         <Image
                             src="/Banner-Frase.png"
                             alt="Banner con frase"
@@ -148,7 +148,7 @@ export default function Home() {
                             absolute 
                             left-1/2 -translate-x-1/2 top-4        /* default: centrado arriba */
                             xl:left-[35%] xl:top-[85%]            /* en xl lo mueves donde quieras (usa % o px) */
-                            w-[90%] max-w-[600px] lg:max-w-[480px] top-[76%] md:top-[81%] md:w-[450px] lg:top-[90%] lg:left-[45%] xl:max-w-[560px] 
+                            w-[90%] max-w-[600px] lg:max-w-[480px] top-[76%]  md:top-[81%] md:w-[450px] lg:top-[90%] lg:left-[45%] xl:max-w-[560px] 
                             m">
                     <Image
                         src="/Banner-Logos.png"
@@ -161,7 +161,7 @@ export default function Home() {
             </div>
 
             {/* Capa 7: Llamado a la Acción */}
-            <div className="absolute w-[90%] max-w-[500px] z-20 text-center text-white font-bold text-sm top-[50%] left-1/2 transform -translate-x-1/2 sm:top-[58%] md:top-[63%] md:text-base lg:text-sm lg:top-[67%] lg:left-[42%] lg:w-[25%] xl:w-[400px] xl:top-[64%] xl:left-[39%]">
+            <div className="absolute w-[90%] max-w-[500px] z-20 text-center text-white font-bold text-sm top-[55%] left-1/2 transform -translate-x-1/2 sm:top-[58%] md:top-[63%] md:text-base lg:text-sm lg:top-[67%] lg:left-[42%] lg:w-[25%] xl:w-[400px] xl:top-[66%] xl:left-[39%]">
                 <p>
                     Aprovecha ahora y renueva tu protección extendida con Dataservicios y Comunicaciones S.A.S.
                 </p>

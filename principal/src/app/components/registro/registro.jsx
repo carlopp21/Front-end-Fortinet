@@ -27,8 +27,8 @@ export default function RegisterForm() {
     // Validación en tiempo real
     const validateField = (field, value) => {
         let error = '';
-        
-        switch(field) {
+
+        switch (field) {
             case 'nombreEmpresa':
                 if (!value.trim()) error = 'Debe ingresar el nombre de la empresa';
                 else if (value.length < 3) error = 'Mínimo 3 caracteres';
@@ -61,7 +61,7 @@ export default function RegisterForm() {
             default:
                 break;
         }
-        
+
         setFieldErrors(prev => ({ ...prev, [field]: error }));
         return error === '';
     };
@@ -75,25 +75,25 @@ export default function RegisterForm() {
     // Validar todo el formulario antes de enviar
     const validateForm = () => {
         let isValid = true;
-        const newErrors = {...fieldErrors};
-        
+        const newErrors = { ...fieldErrors };
+
         for (const field in formData) {
             if (!validateField(field, formData[field])) {
                 isValid = false;
             }
         }
-        
+
         return isValid;
     };
 
     // Handler de envío con validación completa
     const handleSubmitWithValidation = async (e) => {
         e.preventDefault();
-        
+
         if (!validateForm()) {
             return;
         }
-        
+
         // Si pasa la validación, proceder con el envío
         await handleSubmit(e);
     };
@@ -120,9 +120,9 @@ export default function RegisterForm() {
     };
 
     const labelStyle = {
-        display: 'block', 
-        marginBottom: '8px', 
-        fontWeight: 500, 
+        display: 'block',
+        marginBottom: '8px',
+        fontWeight: 500,
         color: 'white',
         position: 'relative'
     };
@@ -135,31 +135,20 @@ export default function RegisterForm() {
                     className="w-full p-8 border border-[#00f3ff] bg-gradient-to-br from-[#0d3458] to-[#00051a] rounded-xl shadow-xl"
                 >
                     <h1 className="
-                            text-sm 
-                            w-[200px] 
-                            font-bold 
-                            mb-6 
-                            items-center 
-                            text-center 
-                            text-[#00f3ff] 
-                            relative 
-                            top-8 
-                            mx-auto 
-                            md:absolute 
-                            md:top-[14%] 
-                            md:left-1/2 
-                            md:-translate-x-1/2 
-                            md:mx-0 
-                            xl:text-xl 
-                            xl:w-[300px] 
-                            lg:text-xl
-                            lg:left-[78%]
-                            md:transform
-                            xl:left-[77%]
-                            ">
+                        text-sm
+                        w-full        /* ocupa todo el ancho del contenedor */
+                        max-w-[350px] /* limita ancho en pantallas grandes */
+                        font-bold
+                        mb-6
+                        text-center
+                        text-[#00f3ff]
+                        mx-auto
+                        xl:text-xl
+                        ">
                         ¿Quieres renovar tus licencias con nosotros?
                     </h1>
-                    <h2 className="text-1xl font-semibold mb-6 text-center text-white mt-[50px] left-[15%] md:mt-[140px] lg:mt-[160px] xl:mt-[200px]">
+
+                    <h2 className="text-1xl font-semibold mb-6 text-center text-white mt-[50px] left-[15%] md:mt-[0px] lg:mt-[00px] xl:mt-[00px]">
                         ¡Regístrate!
                     </h2>
 
@@ -358,41 +347,35 @@ export default function RegisterForm() {
             </div>
 
             {/* Modal */}
+            {/* Renderizamos el form solo si showForm es true */}
             {mostrarCard && (
-                <div
-                    className="fixed inset-0 z-[100] flex items-center justify-center backdrop-blur-sm bg-black/60"
-                    onClick={() => setMostrarCard(false)}
+                <form
+                    onSubmit={handleSubmitWithValidation}
+                    // Añadimos 'relative' para que el botón absolute se posicione respecto al form
+                    className="relative w-full p-8 border border-[#00f3ff] bg-gradient-to-br from-[#0d3458] to-[#00051a] rounded-xl shadow-xl"
                 >
-                    <div
-                        className="relative bg-gradient-to-br from-[#0a7bd4] to-[#092a49] text-white rounded-2xl shadow-2xl p-8 w-[420px] max-w-[90vw] max-h-[90vh] flex flex-col items-center"
-                        onClick={e => e.stopPropagation()}
-                        role="dialog"
-                        aria-modal="true"
-                        aria-label="Modal de confirmación"
+                    {/* BOTÓN CERRAR (visible únicamente en pantallas md, sm y xs) */}
+                    <button
+                        type="button"
+                        onClick={() => {
+                            // Resetea los campos (usa tu función existente)
+                            resetForm();
+                            // Oculta el formulario localmente (lo cerramos)
+                            setShowForm(false);
+                        }}
+                        // lg:hidden -> oculto en pantallas lg y superiores; por tanto se muestra en xs/sm/md
+                        className="absolute top-4 right-4 text-gray-300 hover:text-white transition duration-200 lg:hidden"
+                        aria-label="Cerrar formulario"
                     >
-                        <button
-                            onClick={() => {
-                                resetForm();
-                                setMostrarCard(false);
-                            }}
-                            className="absolute top-4 right-4 text-gray-300 hover:text-white transition duration-200"
-                            aria-label="Cerrar"
-                        >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                            </svg>
-                        </button>
+                        {/* Icono SVG (igual que el que usas en el modal) */}
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
 
-                        <h2 className="text-3xl font-extrabold text-center tracking-wide mb-1">¡Gracias!</h2>
-
-                        <div className="w-full mt-6 mb-4">
-                            <p className="text-center mb-2 text-5xl text-gray-100">
-                                Uno de nuestros asesores se pondrá en contacto contigo pronto
-                            </p>
-                        </div>
-                    </div>
-                </div>
+                </form>
             )}
+
         </>
     );
 }
