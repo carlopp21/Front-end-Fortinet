@@ -36,7 +36,7 @@ export default function RegisterForm() {
                 break;
             case 'nitEmpresa':
                 if (!value.trim()) error = 'El NIT es obligatorio';
-                else if (!/^\d{9,15}$/.test(value)) error = 'NIT inválido (9-15 dígitos)';
+                else if (!/^\d{0,15}$/.test(value)) error = 'NIT inválido (9-15 dígitos)';
                 break;
             case 'tipoLicencia':
                 if (!value) error = 'Por favor seleccione un tipo de licencia';
@@ -191,7 +191,7 @@ export default function RegisterForm() {
                             <label style={labelStyle}>
                                 NIT
                                 <span className="text-red-500 ml-1">*</span>
-                                <span className="text-xs text-gray-400 block mt-1">Solo números, sin guiones (9-15 dígitos)</span>
+                                <span className="text-xs text-gray-400 block mt-1">Solo números, sin guiones </span>
                             </label>
                             <input
                                 type="text"
