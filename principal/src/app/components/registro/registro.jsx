@@ -192,7 +192,7 @@ export default function RegisterForm() {
                         {/* Campo: NIT */}
                         <div style={{ marginBottom: '25px' }}>
                             <label style={labelStyle}>
-                                NIT
+                                NIT o CC
                                 <span className="text-xs text-gray-400 block mt-1">Solo números, sin guiones </span>
                             </label>
                             <input
