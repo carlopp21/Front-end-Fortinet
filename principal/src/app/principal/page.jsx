@@ -26,7 +26,7 @@ export default function Home() {
                     src="/Fondo-Izq.png"
                     alt="Fondo"
                     fill
-                    sizes="100vw"        // <- importante: fondo ocupa toda la pantalla
+                    sizes="100vw"        // <- fondo ocupa toda la pantalla
                     className="object-cover"
                     priority             // <- marca como crítica para que Next haga preload correcto
                 />
@@ -41,7 +41,7 @@ export default function Home() {
                         width={908}
                         height={104}
                         className="object-contain"
-                        priority             // <- logo crítico, usa priority en vez de preload manual
+                        priority             // <- logo crítico
                     />
                 </div>
 
@@ -67,14 +67,14 @@ export default function Home() {
                     </div>
                 </div>
 
-                {/* Banner Frase para móviles (usa fill -> sizes) */}
+                {/* Banner Frase para móviles  */}
                 <div className="block lg:hidden absolute left-1/2 transform -translate-x-1/2 w-[80%] max-w-[400px] z-20 top-[60%] sm:top-[60%] md:top-[65%]">
                     <div className="relative w-full aspect-[3/1] md:top-[55%]">
                         <Image
                             src="/Banner-Frase.png"
                             alt="Banner con frase"
                             fill
-                            sizes="(max-width: 640px) 80vw, 40vw" // ejemplo responsive
+                            sizes="(max-width: 640px) 80vw, 40vw" 
                             className="object-contain"
                         />
                     </div>
@@ -87,7 +87,7 @@ export default function Home() {
                             src="/Personaje.png"
                             alt="Personaje"
                             fill
-                            sizes="(max-width:1024px) 40vw, 300px" // <- necesario
+                            sizes="(max-width:1024px) 40vw, 300px" 
                             className="object-contain"
                         />
                     </div>
