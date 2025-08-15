@@ -47,7 +47,7 @@ export default function Home() {
 
                 {/* Título */}
                 <div className="absolute top-[10%] left-1/2 transform -translate-x-1/2 w-[90%] max-w-[600px] z-30 text-center sm:top-[19%] md:top-[17%] lg:top-[17%] lg:left-[25%] xl:left-[49%]">
-                    <h1 className="text-2xl md:text-2xl lg:text-2xl font-extrabold text-white tracking-tighter drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
+                    <h1 className="text-2xl md:text-2xl lg:text-2xl font-extrabold text-[#ff8000] tracking-tighter drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
                         ¡Extiende tu seguridad!
                     </h1>
                 </div>

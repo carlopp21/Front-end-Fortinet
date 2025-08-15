@@ -211,15 +211,17 @@ export default function RegisterForm() {
                     >
                         {/* Título informativo del formulario */}
                         <h1 className="
-                            text-sm
+                            text-xl
                             w-full
                             max-w-[350px]
                             font-bold
                             mb-6
                             text-center
                             text-[#00f3ff]
+                            sm:text-[30px]
+                            md:text-[xl]
                             mx-auto
-                            xl:text-xl
+                            xl:text-
                             ">
                             ¿Quieres renovar tus licencias con nosotros?
                         </h1>
