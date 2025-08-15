@@ -117,7 +117,7 @@ export default function Home() {
             </div>
 
             {/* CTA móvil */}
-            <div className="absolute w-[90%] max-w-[500px] z-20 text-center text-white font-bold text-sm top-[55%] left-1/2 transform -translate-x-1/2 sm:top-[58%] md:top-[63%] md:text-base lg:text-sm lg:top-[67%] lg:left-[42%] lg:w-[25%] xl:w-[400px] xl:top-[66%] xl:left-[40%]">
+            <div className="absolute w-[90%] max-w-[500px] z-20 text-center text-white font-bold text-sm top-[55%] left-1/2 transform -translate-x-1/2 sm:top-[58%] md:top-[63%] md:text-base lg:text-sm lg:top-[64%] lg:left-[42%] lg:w-[25%] xl:w-[400px] xl:top-[66%] xl:left-[40%]">
                 <p>
                     Aprovecha ahora y renueva tu protección extendida con Dataservicios y Comunicaciones S.A.S.
                 </p>
